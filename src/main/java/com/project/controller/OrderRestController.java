@@ -18,24 +18,24 @@ import java.util.Map;
 import static com.project.constant.OrderConstants.INVALID_RESOURCE_FORMAT;
 
 @RestController
-@RequestMapping(value = "/api/orders", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/client/orders", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class OrderController {
+public class OrderRestController {
 
    private final OrderService orderService;
 
-   @GetMapping
+   @GetMapping(path = "/")
    public ResponseEntity<List<Order>> getAllOrders() {
-      return ResponseEntity.ok(orderService.getAllOrders());
+      return ResponseEntity.status(HttpStatus.OK).body(orderService.getAllOrders());
    }
 
    @GetMapping(path = "/{id}")
    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
-      return ResponseEntity.ok(orderService.getOrderById(id));
+      return ResponseEntity.status(HttpStatus.OK).body(orderService.getOrderById(id));
    }
 
    @Validated
-   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+   @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
    public ResponseEntity<Order> saveOrder(@Valid @RequestBody Order order, BindingResult bindingResult) {
       if(bindingResult.hasErrors()) {
          throw new InvalidDataException(INVALID_RESOURCE_FORMAT);
@@ -49,7 +49,7 @@ public class OrderController {
       if(bindingResult.hasErrors()) {
          throw new InvalidDataException(INVALID_RESOURCE_FORMAT);
       }
-      return ResponseEntity.ok(orderService.updateOrderById(order, id));
+      return ResponseEntity.status(HttpStatus.OK).body(orderService.updateOrderById(order, id));
    }
 
    @DeleteMapping(path = "/{id}")

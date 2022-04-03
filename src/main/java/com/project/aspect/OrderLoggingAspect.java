@@ -16,6 +16,7 @@ import java.util.Arrays;
 @Slf4j
 public class OrderLoggingAspect {
 
+   /*
    @Around("within(com.project.service.impl.OrderServiceImpl)")
    public Object logMethodAroundExecution(ProceedingJoinPoint joinPoint) throws Throwable {
       log.info("entering method {} with args: {}", joinPoint.getSignature(), Arrays.toString(joinPoint.getArgs()));
@@ -44,4 +45,5 @@ public class OrderLoggingAspect {
    public void logMethodAfterThrowingExecution(JoinPoint joinPoint, Throwable exception) {
       log.info("after throwing method {} with message: \"{}\"", joinPoint.getSignature(), exception.getMessage());
    }
+    */
 }

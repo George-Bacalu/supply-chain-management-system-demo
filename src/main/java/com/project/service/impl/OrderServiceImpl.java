@@ -20,9 +20,6 @@ public class OrderServiceImpl implements OrderService {
 
    @Override
    public List<Order> getAllOrders() {
-      if(orderRepository.findAll().isEmpty()) {
-         throw new ResourceNotFoundException(NO_RESOURCE_FOUND);
-      }
       return orderRepository.findAll();
    }
 

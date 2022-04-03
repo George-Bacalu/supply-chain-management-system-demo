@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping
 @RequiredArgsConstructor
-public class UserRegistrationController {
+public class UserRegistrationModelViewController {
 
    private final UserService userService;
 
    @GetMapping("/registration")
    public String showRegistrationPage(Model model) {
       model.addAttribute("user", new User());
-      return "registration";
+      return "auth/registration";
    }
 
    @PostMapping("/registration")
@@ -32,7 +32,7 @@ public class UserRegistrationController {
    @GetMapping("/login")
    public String showLoginPage(Model model) {
       model.addAttribute("user", new User());
-      return "login";
+      return "auth/login";
    }
 
    @PostMapping("/login")
