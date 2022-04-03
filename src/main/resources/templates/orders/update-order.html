@@ -30,10 +30,7 @@
                                    placeholder="Customer ID" class="form-control" required autofocus="autofocus">
                         </div>
                         <div class="col-12">
-                            <label for="orderItems" class="form-label">Order Items</label>
-                            <input type="text" id="orderItems" name="orderItems" th:field="*{orderItems}"
-                                   placeholder="Enter the items for your order" class="form-control" required autofocus="autofocus">
-                            <label class="label-control">Order Items</label>
+                            <label class="form-label">Order Items</label>
                             <div th:each="item: *{orderItems}">
                                 <label for="itemName" class="form-label">Item</label>
                                 <input type="text" id="itemName" name="itemName" th:field="${item.name}"

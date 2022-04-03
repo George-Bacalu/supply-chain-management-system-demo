@@ -1,5 +1,6 @@
 package com.project.service.impl;
 
+import com.project.entity.Order;
 import com.project.entity.User;
 import com.project.repository.UserRepository;
 import com.project.service.UserService;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -15,6 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.List;
 
 import static com.project.constant.UserAuthorityConstants.USERNAME_NOT_FOUND;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
@@ -38,12 +41,14 @@ class UserServiceImplTest {
 
    @Test
    @DisplayName("saveUser")
-   public void whenGivenUser_shouldSaveUser() {
+   public void whenSaveUser_shouldSaveUser() {
       userServiceTest.saveUser(user);
 
-      given(userRepositoryTest.save(user)).willReturn(user);
+      ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
+      verify(userRepositoryTest).save(userArgumentCaptor.capture());
 
-      verify(userRepositoryTest).save(user);
+      User capturedUser = userArgumentCaptor.getValue();
+      assertThat(capturedUser).isEqualTo(user);
    }
 
    @Test
