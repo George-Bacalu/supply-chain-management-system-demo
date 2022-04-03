@@ -29,14 +29,19 @@ public class UserServiceImpl implements UserService {
    private BCryptPasswordEncoder passwordEncoder;
 
    @Override
-   public void saveUser(User user) {
+   public List<User> getAllUsers() {
+      return userRepository.findAll();
+   }
+
+   @Override
+   public User saveUser(User user) {
       Long userId = user.getUserId();
       String firstName = user.getFirstName();
       String lastName = user.getLastName();
       String email = user.getEmailId();
       String password = passwordEncoder.encode(user.getPassword());
       List<Role> roles = user.getRoles();
-      userRepository.save(new User(userId, firstName, lastName, email, password, roles));
+      return userRepository.save(new User(userId, firstName, lastName, email, password, roles));
    }
 
    @Override
