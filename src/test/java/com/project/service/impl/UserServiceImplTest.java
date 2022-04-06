@@ -1,6 +1,5 @@
 package com.project.service.impl;
 
-import com.project.entity.Order;
 import com.project.entity.User;
 import com.project.repository.UserRepository;
 import com.project.service.UserService;
@@ -17,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.List;
 
 import static com.project.constant.UserAuthorityConstants.USERNAME_NOT_FOUND;
+import static com.project.mock.UserMock.getMockUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
 
-   User user = User.builder().userId(1L).firstName("George").lastName("Bacalu").emailId("georgebacalu@email.com").password("georgebacalu").build();
+   User user = getMockUser();
 
    @Mock
    private UserRepository userRepositoryTest;

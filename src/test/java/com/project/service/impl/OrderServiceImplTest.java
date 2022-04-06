@@ -1,49 +1,39 @@
 package com.project.service.impl;
 
-import com.project.entity.DeliveryAddress;
+import com.project.entity.Customer;
 import com.project.entity.Order;
-import com.project.entity.OrderItem;
 import com.project.exception.ResourceNotFoundException;
 import com.project.repository.OrderRepository;
 import com.project.service.OrderService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
 
-import static com.project.constant.OrderConstants.RESOURCE_WITH_ID_NOT_FOUND;
+import static com.project.constant.ClientConstants.ORDER_WITH_ID_NOT_FOUND;
+import static com.project.mock.OrderMock.getMockOrder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
-//@ExtendWith(MockitoExtension.class)
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 class OrderServiceImplTest {
 
-   OrderItem item1 = OrderItem.builder().name("Shoe order").quantity(100).build();
-   OrderItem item2 = OrderItem.builder().name("T-shirt order").quantity(200).build();
-   DeliveryAddress deliveryAddress = DeliveryAddress.builder().country("Country 1").city("City 1").street("Street 1").phoneNumber("0000000000").build();
-   Order order = Order.builder().customer("Adidas").customerId(1L).orderItems(List.of(item1, item2)).deliveryAddress(deliveryAddress).build();
+   Order order = getMockOrder();
 
    @Mock
    private OrderRepository orderRepositoryTest;
 
    @InjectMocks
    private OrderService orderServiceTest;
-
-   @BeforeEach
-   public void setUp() {
-      orderServiceTest = new OrderServiceImpl(orderRepositoryTest);
-   }
 
    @Test
    @DisplayName("getAllOrders")
@@ -74,7 +64,7 @@ class OrderServiceImplTest {
 
       assertThatThrownBy(() -> orderServiceTest.getOrderById(orderId))
               .isInstanceOf(ResourceNotFoundException.class)
-              .hasMessageContaining(RESOURCE_WITH_ID_NOT_FOUND);
+              .hasMessageContaining(ORDER_WITH_ID_NOT_FOUND);
 
       verify(orderRepositoryTest, never()).findById(orderId);
    }
@@ -95,10 +85,13 @@ class OrderServiceImplTest {
    @DisplayName("updateOrderById")
    public void whenGivenIdToUpdateOrder_shouldReturnOrder_ifFound() {
       order.setOrderId(2L);
-      order.setCustomer("Reebok");
+      Customer customer = order.getCustomer();
+      customer.setName("Nike");
+      order.setCustomer(customer);
 
       Order newOrder = new Order();
-      order.setCustomer("Nike");
+      customer.setName("Reebok");
+      order.setCustomer(customer);
 
       given(orderRepositoryTest.findById(order.getOrderId())).willReturn(Optional.of(order));
       orderServiceTest.updateOrderById(newOrder, order.getOrderId());
@@ -108,15 +101,17 @@ class OrderServiceImplTest {
    @DisplayName("updateOrderById_throwException")
    public void whenGivenIdToUpdateOrder_shouldThrowException_ifNotFound() {
       order.setOrderId(2L);
-      order.setCustomer("Reebok");
+      Customer customer = order.getCustomer();
+      customer.setName("Nike");
+      order.setCustomer(customer);
 
       Order newOrder = new Order();
-      newOrder.setOrderId(3L);
-      order.setCustomer("Nike");
+      customer.setName("Reebok");
+      order.setCustomer(customer);
 
       assertThatThrownBy(() -> orderServiceTest.updateOrderById(newOrder, order.getOrderId()))
               .isInstanceOf(ResourceNotFoundException.class)
-              .hasMessageContaining(RESOURCE_WITH_ID_NOT_FOUND);
+              .hasMessageContaining(ORDER_WITH_ID_NOT_FOUND);
 
       verify(orderRepositoryTest, never()).save(order);
    }
@@ -139,7 +134,7 @@ class OrderServiceImplTest {
 
       assertThatThrownBy(() -> orderServiceTest.deleteOrderById(orderId))
               .isInstanceOf(ResourceNotFoundException.class)
-              .hasMessageContaining(RESOURCE_WITH_ID_NOT_FOUND);
+              .hasMessageContaining(ORDER_WITH_ID_NOT_FOUND);
 
       verify(orderRepositoryTest, never()).deleteById(orderId);
    }

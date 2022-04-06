@@ -10,62 +10,60 @@
 <main>
     <div class="container">
         <div class="row d-flex justify-content-center align-items-center" style="height: 78vh">
-            <div class="col-lg-6 col-md-6 col-sm-6 container card border-dark" style="box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2)">
+            <div class="col-lg-6 col-md-6 col-sm-6 container card border-dark"
+                 style="box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2)">
                 <h1 class="text-center pt-2">Create New Order</h1>
                 <div class="card-body">
                     <form class="row g-3" th:action="@{/client/orders}" th:object="${order}" method="post">
-                        <div class="col-md-3">
-                            <label for="orderId" class="form-label">Order ID</label>
-                            <input type="text" id="orderId" name="orderId" th:field="*{orderId}"
-                                   placeholder="Order ID" class="form-control" required autofocus="autofocus">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="customer" class="form-label">Customer</label>
-                            <input type="text" id="customer" name="customer" th:field="*{customer}"
-                                   placeholder="Customer" class="form-control" required autofocus="autofocus">
-                        </div>
-                        <div class="col-md-3">
+                        <div class="col-6">
                             <label for="customerId" class="form-label">Customer ID</label>
-                            <input type="text" id="customerId" name="customerId" th:field="*{customerId}"
+                            <input type="text" id="customerId" name="customerId" th:field="*{customer.customerId}"
                                    placeholder="Customer ID" class="form-control" required autofocus="autofocus">
+                        </div>
+                        <div class="col-6">
+                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                            <input type="text" id="phoneNumber" name="phoneNumber"
+                                   th:field="*{customer.phoneNumber}"
+                                   placeholder="Enter Phone Number" class="form-control" required
+                                   autofocus="autofocus">
+                        </div>
+                        <div class="col-3">
+                            <label for="street" class="form-label">Street</label>
+                            <input type="text" id="street" name="street" th:field="*{address.street}"
+                                   placeholder="Enter Street" class="form-control" required
+                                   autofocus="autofocus">
+                        </div>
+                        <div class="col-md-1">
+                            <label for="number" class="form-label">No.</label>
+                            <input type="text" id="number" name="number" th:field="*{address.number}"
+                                   class="form-control" required
+                                   autofocus="autofocus">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="country" class="form-label">Country</label>
+                            <input type="text" id="country" name="country" th:field="*{address.country}"
+                                   placeholder="Enter Country" class="form-control" required
+                                   autofocus="autofocus">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="city" class="form-label">City</label>
+                            <input type="text" id="city" name="city" th:field="*{address.city}"
+                                   placeholder="Enter City" class="form-control" required
+                                   autofocus="autofocus">
                         </div>
                         <div class="col-12">
                             <label class="form-label">Order Items</label>
-                            <div th:each="item: *{orderItems}">
+                            <div th:each="product: *{products}">
                                 <label for="itemName" class="form-label">Item</label>
-                                <input type="text" id="itemName" name="itemName" th:field="${item.name}"
-                                       placeholder="Enter Order Items" class="form-control" required autofocus="autofocus">
-                                <label for="quantity" class="form-label" th:field="${item.quantity}">Quantity</label>
+                                <input type="text" id="itemName" name="itemName" th:field="${product.name}"
+                                       placeholder="Enter Order Items" class="form-control" required
+                                       autofocus="autofocus">
+                                <label for="quantity" class="form-label" th:field="${product.quantity}">Quantity</label>
                                 <select id="quantity" class="form-select">
                                     <option>50</option>
                                     <option>100</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-12">
-                            <label for="street" class="form-label">Street</label>
-                            <input type="text" id="street" name="street" th:field="*{deliveryAddress.street}"
-                                   placeholder="Enter Street" class="form-control" required
-                                   autofocus="autofocus">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="city" class="form-label">City</label>
-                            <input type="text" id="city" name="city" th:field="*{deliveryAddress.city}"
-                                   placeholder="Enter City" class="form-control" required
-                                   autofocus="autofocus">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="country" class="form-label">Country</label>
-                            <input type="text" id="country" name="country" th:field="*{deliveryAddress.country}"
-                                   placeholder="Enter Country" class="form-control" required
-                                   autofocus="autofocus">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="phoneNumber" class="form-label">Phone Number</label>
-                            <input type="text" id="phoneNumber" name="phoneNumber"
-                                   th:field="*{deliveryAddress.phoneNumber}"
-                                   placeholder="Enter Phone Number" class="form-control" required
-                                   autofocus="autofocus">
                         </div>
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary">Create</button>

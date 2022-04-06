@@ -8,8 +8,13 @@
 <header th:replace="~{fragments/layout :: projectHeader}"></header>
 
 <main>
-    <div class="px-2 pt-3">
-        <h3>Welcome, <span sec:authentication="principal.username">User</span></h3>
+    <div class="d-flex justify-content-center align-items-center flex-column" style="height: 70vh">
+        <div class="row mb-3">
+            <img src="" th:src="@{/images/main-banner.png}" style="width: 500px; height: 250px" alt="scm-banner">
+        </div>
+        <div class="row">
+            <h3 class="text-center">Welcome, <span class="fw-bold" sec:authentication="principal.username">User</span></h3>
+        </div>
     </div>
 </main>
 

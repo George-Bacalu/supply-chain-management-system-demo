@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/client/orders")
 @RequiredArgsConstructor
@@ -18,6 +20,18 @@ public class OrderModelViewController {
    public String getAllOrdersView(Model model) {
       model.addAttribute("orders", orderService.getAllOrders());
       return "orders/index";
+   }
+
+   @GetMapping("/customers")
+   public String getAllOrderCustomersView(Model model) {
+      model.addAttribute("customers", orderService.getAllOrders().stream().map(Order::getCustomer).collect(Collectors.toList()));
+      return "orders/customers";
+   }
+
+   @GetMapping("/addresses")
+   public String getAllOrdersAddressesView(Model model) {
+      model.addAttribute("addresses", orderService.getAllOrders().stream().map(Order::getAddress).collect(Collectors.toList()));
+      return "orders/addresses";
    }
 
    @GetMapping("/create-new")

@@ -21,24 +21,20 @@
             <thead class="table-dark">
                 <tr>
                     <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Customer ID</th>
+                    <th><a th:href="@{/client/orders/customers}" class="text-white text-decoration-none">Customer ID</a></th>
                     <th>Created at</th>
                     <th>Updated at</th>
-                    <th>Order Items</th>
-                    <th>Delivery Address</th>
+                    <th><a th:href="@{/client/orders/addresses}" class="text-white text-decoration-none">Address ID</a></th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="order: ${orders}">
                     <td th:text="${order.orderId}"></td>
-                    <td th:text="${order.customer}"></td>
-                    <td th:text="${order.customerId}"></td>
+                    <td th:text="${order.customer.customerId}"></td>
                     <td th:text="${order.createdAt}"></td>
                     <td th:text="${order.updatedAt}"></td>
-                    <td th:text="${order.orderItems}"></td>
-                    <td th:text="${order.deliveryAddress}"></td>
+                    <td th:text="${order.address.addressId}"></td>
                     <td>
                         <a th:href="@{/client/orders/update/{id}(id=${order.orderId})}" class="btn btn-primary">Update</a>
                         <a th:href="@{/client/orders/delete/{id}(id=${order.orderId})}" class="btn btn-danger">Delete</a>

@@ -8,12 +8,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static com.project.mock.UserMock.getMockUser;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class UserRepositoryTest {
 
-   User user = User.builder().userId(1L).firstName("George").lastName("Bacalu").emailId("georgebacalu@email.com").password("georgebacalu").build();
+   User user = getMockUser();
 
    @Autowired
    private UserRepository userRepositoryTest;
