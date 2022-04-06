@@ -21,6 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 
+import static com.project.mocks.UserMock.getMockedUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -30,6 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class UserRegistrationRestControllerTest {
+
+   User user = getMockedUser();
 
    private MockMvc mockMvc;
 
@@ -63,7 +66,6 @@ class UserRegistrationRestControllerTest {
    @Test
    @DisplayName("saveUser")
    public void whenGivenUser_shouldSaveUser() throws Exception {
-      User user = User.builder().userId(1L).firstName("George").lastName("Bacalu").emailId("georgebacalu@email.com").password("georgebacalu").build();
 
       MvcResult result = mockMvc.perform(post("/api/users")
                       .content(mapper.writeValueAsString(user))

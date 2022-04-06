@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{fragments/layout :: projectHead('Create Order Page')}"></head>
+
+<body sec:authorize="isAuthenticated()">
+
+<header th:replace="~{fragments/layout :: projectHeader}"></header>
+
+<main>
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center" style="height: 78vh">
+            <div class="col-lg-6 col-md-6 col-sm-6 container card border-dark"
+                 style="box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2)">
+                <h3 class="text-center pt-2">Enter your delivery address!</h3>
+                <div class="card-body">
+                    <form class="row g-3" th:action="@{/client/orders/save-new-order}" th:object="${order}" method="post">
+                        <div class="mb-3">
+                            <label for="country" class="form-label">Country</label>
+                            <input type="text" id="country" name="country" th:field="*{address.country}"
+                                   placeholder="Enter Country" class="form-control" required autofocus="autofocus">
+                        </div>
+                        <div class="mb-3">
+                            <label for="city" class="form-label">City</label>
+                            <input type="text" id="city" name="city" th:field="*{address.city}" placeholder="Enter City"
+                                   class="form-control" required autofocus="autofocus">
+                        </div>
+                        <div class="col-10">
+                            <label for="street" class="form-label">Street</label>
+                            <input type="text" id="street" name="street" th:field="*{address.street}"
+                                   placeholder="Enter Street" class="form-control" required autofocus="autofocus">
+                        </div>
+                        <div class="col-2">
+                            <label for="number" class="form-label">No.</label>
+                            <input type="text" id="number" name="number" th:field="*{address.number}"
+                                   class="form-control" required autofocus="autofocus">
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <a type="button" class="btn btn-secondary mr-2" th:href="@{/client/orders/create-order/step2}">Back</a>
+                            <a type="button" class="btn btn-danger mr-2" th:href="@{/client/orders}">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: projectFooter}"></footer>
+
+</body>
+</html>
