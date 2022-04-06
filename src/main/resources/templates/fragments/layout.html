@@ -51,7 +51,7 @@
         </section>
     </div>
     <div class="text-center pb-2" style="background-color: rgba(0, 0, 0, 0.05);">
-        © Copyright 2022 - George Bacalu
+        © Copyright <span th:text="${#dates.year(#dates.createNow())}"></span> - George Bacalu
     </div>
 </footer>
 </body>
