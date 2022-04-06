@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.project.constant.ClientConstants.ORDER_WITH_ID_NOT_FOUND;
-import static com.project.mock.OrderMock.getMockOrder;
+import static com.project.mocks.OrderMock.getMockedOrder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class OrderServiceImplTest {
 
-   Order order = getMockOrder();
+   Order order = getMockedOrder();
 
    @Mock
    private OrderRepository orderRepositoryTest;

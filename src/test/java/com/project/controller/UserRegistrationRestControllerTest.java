@@ -21,7 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 
-import static com.project.mock.UserMock.getMockUser;
+import static com.project.mocks.UserMock.getMockedUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class UserRegistrationRestControllerTest {
 
-   User user = getMockUser();
+   User user = getMockedUser();
 
    private MockMvc mockMvc;
 

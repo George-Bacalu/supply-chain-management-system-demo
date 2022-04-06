@@ -1,4 +1,4 @@
-package com.project.mock;
+package com.project.mocks;
 
 import com.project.entity.Address;
 import com.project.entity.Customer;
@@ -14,7 +14,7 @@ import static lombok.AccessLevel.PRIVATE;
 @NoArgsConstructor(access = PRIVATE)
 public class OrderMock {
 
-   public static Order getMockOrder() {
+   public static Order getMockedOrder() {
       Product product1 = Product.builder().productId(1L).name("Shoe order").price(80.0).quantity(100).build();
       Product product2 = Product.builder().productId(2L).name("T-shirt order").price(50.0).quantity(200).build();
       Customer customer = Customer.builder().customerId(1L).name("Adidas").phoneNumber("0000000000").build();

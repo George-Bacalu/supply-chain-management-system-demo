@@ -9,4 +9,6 @@ public class ClientConstants {
 
    public static final String PRODUCT_WITH_ID_NOT_FOUND = "No product with id {0} was found!";
    public static final String INVALID_PRODUCT_FORMAT = "The product {0} that you are trying to save is not properly formatted!";
+
+   public static final String PAGE_NOT_FOUND = "Page not found!";
 }

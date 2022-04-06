@@ -8,13 +8,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static com.project.mock.OrderMock.getMockOrder;
+import static com.project.mocks.OrderMock.getMockedOrder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class OrderRepositoryTest {
 
-   Order order = getMockOrder();
+   Order order = getMockedOrder();
 
    @Autowired
    private OrderRepository orderRepositoryTest;

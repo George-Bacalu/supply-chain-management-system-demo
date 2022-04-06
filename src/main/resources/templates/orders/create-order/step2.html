@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{fragments/layout :: projectHead('Create Order Page')}"></head>
+
+<body sec:authorize="isAuthenticated()">
+
+<header th:replace="~{fragments/layout :: projectHeader}"></header>
+
+<main>
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center" style="height: 78vh">
+            <div class="col-lg-6 col-md-6 col-sm-6 container card border-dark"
+                 style="box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2)">
+                <h3 class="text-center pt-2">Enter your customer details!</h3>
+                <div class="card-body">
+                    <form class="row g-3" th:action="@{/client/orders/create-order/step3}" th:object="${order}" method="post">
+                        <div class="mb-3">
+                            <label for="company" class="form-label">Company</label>
+                            <input type="text" id="company" name="company" th:field="*{customer.name}"
+                                   placeholder="Enter Company" class="form-control" required autofocus="autofocus">
+                        </div>
+                        <div class="mb-3">
+                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                            <input type="text" id="phoneNumber" name="phoneNumber" th:field="*{customer.phoneNumber}"
+                                   placeholder="Enter Phone Number" class="form-control" required autofocus="autofocus">
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Next Step</button>
+                            <a type="button" class="btn btn-secondary mr-2" th:href="@{/client/orders/create-order/step1}">Back</a>
+                            <a type="button" class="btn btn-danger mr-2" th:href="@{/client/orders}">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: projectFooter}"></footer>
+
+</body>
+</html>

@@ -42,34 +42,34 @@ public class OrderServiceImpl implements OrderService {
       if (order.getProducts().isEmpty()) {
          throw new ProductException(INVALID_ORDER_FORMAT, order);
       }
-      Order orderToSave = Order.builder()
+      Order orderToBeSaved = Order.builder()
               .createdAt(LocalDateTime.now())
               .customer(order.getCustomer())
               .address(order.getAddress())
               .products(order.getProducts())
               .totalPrice(getTotalPrice(order.getProducts()))
               .build();
-      return orderRepository.save(orderToSave);
+      return orderRepository.save(orderToBeSaved);
    }
 
    @Override
-   public Order updateOrderById(Order newOrder, Long id) {
-      if (newOrder == null) {
+   public Order updateOrderById(Order order, Long id) {
+      if (order == null) {
          throw new ResourceNotFoundException(NO_ORDER_FOUND);
       }
       if (id < 0) {
          throw new InvalidDataException(ORDER_WITH_INVALID_ID, id);
       }
-      if (newOrder.getProducts().isEmpty()) {
-         throw new ProductException(INVALID_ORDER_FORMAT, newOrder);
+      if (order.getProducts().isEmpty()) {
+         throw new ProductException(INVALID_ORDER_FORMAT, order);
       }
-      Order order = getOrderById(id);
-      order.setCustomer(newOrder.getCustomer());
-      order.setUpdatedAt(LocalDateTime.now());
-      order.setProducts(newOrder.getProducts());
-      order.setTotalPrice(getTotalPrice(newOrder.getProducts()));
-      order.setAddress(newOrder.getAddress());
-      return orderRepository.save(order);
+      Order orderToBeUpdated = getOrderById(id);
+      orderToBeUpdated.setCustomer(order.getCustomer());
+      orderToBeUpdated.setUpdatedAt(LocalDateTime.now());
+      orderToBeUpdated.setProducts(order.getProducts());
+      orderToBeUpdated.setTotalPrice(getTotalPrice(order.getProducts()));
+      orderToBeUpdated.setAddress(order.getAddress());
+      return orderRepository.save(orderToBeUpdated);
    }
 
    @Override

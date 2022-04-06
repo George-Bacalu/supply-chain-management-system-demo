@@ -14,7 +14,7 @@
                  style="box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2)">
                 <h1 class="text-center pt-2">Create New Order</h1>
                 <div class="card-body">
-                    <form class="row g-3" th:action="@{/client/orders}" th:object="${order}" method="post">
+                    <form class="row g-3" th:action="@{/client/orders/save-updated-order/{id}(id=${order.orderId})}" th:object="${order}" method="post">
                         <div class="col-6">
                             <label for="customerId" class="form-label">Customer ID</label>
                             <input type="text" id="customerId" name="customerId" th:field="*{customer.customerId}"

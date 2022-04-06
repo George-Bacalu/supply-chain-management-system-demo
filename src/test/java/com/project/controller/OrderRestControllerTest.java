@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.List;
 
 import static com.project.constant.ClientConstants.ORDER_WITH_ID_NOT_FOUND;
-import static com.project.mock.OrderMock.getMockOrder;
+import static com.project.mocks.OrderMock.getMockedOrder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(OrderRestController.class)
 class OrderRestControllerTest {
 
-   Order order = getMockOrder();
+   Order order = getMockedOrder();
 
    @Autowired
    private MockMvc mockMvc;

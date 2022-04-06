@@ -10,7 +10,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.List;
 
 @Data
 @Builder
@@ -42,8 +41,4 @@ public class Address implements Serializable {
    @Column(nullable = false)
    @Range(min = 1, max = 1000, message = "{address.number.invalid}")
    private Integer number;
-
-   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "address")
-   @Size(max = 50, message = "{address.order.invalid}")
-   private List<Order> order;
 }

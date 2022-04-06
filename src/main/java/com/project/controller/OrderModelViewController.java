@@ -34,31 +34,53 @@ public class OrderModelViewController {
       return "orders/addresses";
    }
 
-   @GetMapping("/create-new")
-   public String createOrderFormView(Model model) {
+   @GetMapping("/create-order/step1")
+   public String createOrderFormStep1View(Model model) {
       model.addAttribute("order", new Order());
-      return "orders/create-order";
+      return "orders/create-order/step1";
    }
 
-   @PostMapping
+   @GetMapping("/create-order/step2")
+   public String createOrderFormStep2View(Model model) {
+      model.addAttribute("order", new Order());
+      return "orders/create-order/step2";
+   }
+
+   @GetMapping("/create-order/step3")
+   public String createOrderFormStep3View(Model model) {
+      model.addAttribute("order", new Order());
+      return "orders/create-order/step3";
+   }
+
+   @PostMapping("/create-order/step2")
+   public String goToSecondStepOrderView(@ModelAttribute("order") Order order) {
+      return "redirect:/client/orders/create-order/step2";
+   }
+
+   @PostMapping("/create-order/step3")
+   public String goToThirdStepOrderView(@ModelAttribute("order") Order order) {
+      return "redirect:/client/orders/create-order/step3";
+   }
+
+   @PostMapping("/save-new-order")
    public String saveOrderView(@ModelAttribute("order") Order order) {
       orderService.saveOrder(order);
       return "redirect:/client/orders";
    }
 
-   @GetMapping("/update/{id}")
+   @GetMapping("/update-order/{id}")
    public String updateOrderFormView(@PathVariable Long id, Model model) {
       model.addAttribute("order", orderService.getOrderById(id));
       return "orders/update-order";
    }
 
-   @PostMapping("/{id}")
+   @PostMapping("/save-updated-order/{id}")
    public String updateOrderView(@ModelAttribute("order") Order order, @PathVariable Long id) {
       orderService.updateOrderById(order, id);
       return "redirect:/client/orders";
    }
 
-   @DeleteMapping("/delete/{id}")
+   @DeleteMapping("/delete-order/{id}")
    public String deleteOrderView(@PathVariable Long id) {
       orderService.deleteOrderById(id);
       return "redirect:/client/orders";

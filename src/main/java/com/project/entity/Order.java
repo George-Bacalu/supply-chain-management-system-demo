@@ -52,7 +52,7 @@ public class Order implements Serializable {
    @Size(max = 50, message = "{order.products.invalid}")
    private List<Product> products;
 
-   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
    @JoinColumn(name = "address_id", referencedColumnName = "addressId")
    private Address address;
 }
