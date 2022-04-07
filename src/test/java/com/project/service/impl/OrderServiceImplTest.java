@@ -4,7 +4,7 @@ import com.project.entity.Customer;
 import com.project.entity.Order;
 import com.project.exception.ResourceNotFoundException;
 import com.project.repository.OrderRepository;
-import com.project.service.OrderService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,32 +33,38 @@ class OrderServiceImplTest {
    private OrderRepository orderRepositoryTest;
 
    @InjectMocks
-   private OrderService orderServiceTest;
+   private OrderServiceImpl orderServiceTest;
+
+   @BeforeEach
+   void setUp() {
+      orderServiceTest.saveOrder(order);
+   }
 
    @Test
-   @DisplayName("getAllOrders")
-   public void shouldReturnAllOrders() {
+   @DisplayName("getAllOrdersService")
+   public void getAllOrders_service_shouldReturnAllOrders() {
       orderServiceTest.getAllOrders();
 
       given(orderRepositoryTest.findAll()).willReturn(List.of(order));
 
-      assertThat(List.of(order)).isEqualTo(orderRepositoryTest.findAll());
+      assertThat(orderRepositoryTest.findAll().toString()).isEqualTo(List.of(order).toString());
       verify(orderRepositoryTest).findAll();
    }
 
    @Test
-   @DisplayName("getOrderById")
-   public void whenGivenIdToGetOrder_shouldReturnOrder_ifFound() {
+   @DisplayName("getOrderByIdValid")
+   public void getOrderById_shouldReturnOrder_whenGivenIdToGetOrderIsValid() {
       Long orderId = 1L;
       given(orderRepositoryTest.existsById(orderId)).willReturn(true);
       orderServiceTest.getOrderById(orderId);
 
+      assertThat(orderRepositoryTest.getById(orderId).toString()).isEqualTo(List.of(order).toString());
       verify(orderRepositoryTest).findById(orderId);
    }
 
    @Test
-   @DisplayName("getOrderById_throwException")
-   public void whenGivenIdToGetOrder_shouldThrowException_ifNotFound() {
+   @DisplayName("getOrderByIdInvalid")
+   public void getOrderById_shouldThrowException_whenGivenIdToGetOrderIsInvalid() {
       Long orderId = 1L;
       given(orderRepositoryTest.existsById(orderId)).willReturn(false);
 
@@ -71,19 +77,17 @@ class OrderServiceImplTest {
 
    @Test
    @DisplayName("saveOrder")
-   public void whenSaveOrder_shouldReturnOrder() {
-      orderServiceTest.saveOrder(order);
-
+   public void saveOrder_shouldReturnOrder() {
       ArgumentCaptor<Order> orderArgumentCaptor = ArgumentCaptor.forClass(Order.class);
       verify(orderRepositoryTest).save(orderArgumentCaptor.capture());
 
       Order capturedOrder = orderArgumentCaptor.getValue();
-      assertThat(capturedOrder).isEqualTo(order);
+      assertThat(capturedOrder.toString()).isEqualTo(order.toString());
    }
 
    @Test
-   @DisplayName("updateOrderById")
-   public void whenGivenIdToUpdateOrder_shouldReturnOrder_ifFound() {
+   @DisplayName("updateOrderByIdValid")
+   public void updateOrderById_shouldReturnOrder_whenGivenIdToUpdateOrderIsValid() {
       order.setOrderId(2L);
       Customer customer = order.getCustomer();
       customer.setName("Nike");
@@ -94,12 +98,13 @@ class OrderServiceImplTest {
       order.setCustomer(customer);
 
       given(orderRepositoryTest.findById(order.getOrderId())).willReturn(Optional.of(order));
+
       orderServiceTest.updateOrderById(newOrder, order.getOrderId());
    }
 
    @Test
-   @DisplayName("updateOrderById_throwException")
-   public void whenGivenIdToUpdateOrder_shouldThrowException_ifNotFound() {
+   @DisplayName("updateOrderByIdInvalid")
+   public void updateOrderById_shouldThrowException_whenGivenIdToUpdateOrderIsInvalid() {
       order.setOrderId(2L);
       Customer customer = order.getCustomer();
       customer.setName("Nike");
@@ -117,18 +122,19 @@ class OrderServiceImplTest {
    }
 
    @Test
-   @DisplayName("deleteOrderById")
-   public void whenGivenIdToDeleteOrder_shouldReturnConfirmMessage_ifFound() {
+   @DisplayName("deleteOrderByIdIsValid")
+   public void deleteOrderById_shouldReturnConfirmMessage_whenGivenIdToDeleteOrderIsValid() {
       Long orderId = 1L;
       given(orderRepositoryTest.existsById(orderId)).willReturn(true);
+
       orderServiceTest.deleteOrderById(orderId);
 
       verify(orderRepositoryTest).deleteById(orderId);
    }
 
    @Test
-   @DisplayName("deleteOrderById_throwException")
-   public void whenGivenIdToDeleteOrder_shouldThrowException_ifNotFound() {
+   @DisplayName("deleteOrderByIdIsInValid")
+   public void deleteOrderById_shouldReturnConfirmMessage_whenGivenIdToDeleteOrderIsInvalid() {
       Long orderId = 1L;
       given(orderRepositoryTest.existsById(orderId)).willReturn(false);
 

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{fragments/layout :: projectHead('Home Page')}"></head>
+
+<body sec:authorize="isAuthenticated()">
+
+<main class="d-flex justify-content-center align-items-center flex-column" style="height: 70vh">
+    <img src="" th:src="@{/img/page-not-found-banner.png}" alt="scm-banner">
+</main>
+
+</body>
+</html>

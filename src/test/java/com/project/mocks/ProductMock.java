@@ -10,13 +10,13 @@ import java.util.List;
 public class ProductMock {
 
     public static Product getMockedProduct() {
-        return Product.builder().productId(1L).name("Shoe order").price(80.0).quantity(100).build();
+        return Product.builder().productId(1L).name("Shoes order").price(80.0).quantity(100).build();
     }
 
     public static List<Product> getMockedProductList() {
         return List.of(
                 getMockedProduct(),
-                Product.builder().productId(2L).name("T-shirt order").price(50.0).quantity(200).build()
+                Product.builder().productId(2L).name("T-shirts order").price(50.0).quantity(200).build()
         );
     }
 }

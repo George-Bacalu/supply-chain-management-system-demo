@@ -5,8 +5,10 @@ import com.project.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -32,6 +34,13 @@ public class OrderModelViewController {
    public String getAllOrdersAddressesView(Model model) {
       model.addAttribute("addresses", orderService.getAllOrders().stream().map(Order::getAddress).collect(Collectors.toList()));
       return "orders/addresses";
+   }
+
+   @GetMapping("/products")
+   public String getAllOrdersProductsView(ModelMap model) {
+      model.addAttribute("orders", orderService.getAllOrders());
+      model.addAttribute("products", orderService.getAllOrders().stream().map(Order::getProducts).flatMap(List::stream).collect(Collectors.toList()));
+      return "orders/products";
    }
 
    @GetMapping("/create-order/step1")
@@ -80,7 +89,13 @@ public class OrderModelViewController {
       return "redirect:/client/orders";
    }
 
-   @DeleteMapping("/delete-order/{id}")
+   @GetMapping("/delete-order/{id}")
+   public String deleteOrderView(@PathVariable Long id, Model model) {
+      model.addAttribute("order", orderService.getOrderById(id));
+      return "orders/delete-order";
+   }
+
+   @PostMapping("/delete-order/{id}")
    public String deleteOrderView(@PathVariable Long id) {
       orderService.deleteOrderById(id);
       return "redirect:/client/orders";

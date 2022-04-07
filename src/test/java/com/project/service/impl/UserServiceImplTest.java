@@ -2,7 +2,6 @@ package com.project.service.impl;
 
 import com.project.entity.User;
 import com.project.repository.UserRepository;
-import com.project.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +31,7 @@ class UserServiceImplTest {
    private UserRepository userRepositoryTest;
 
    @InjectMocks
-   private UserService userServiceTest;
+   private UserServiceImpl userServiceTest;
 
    @BeforeEach
    public void setUp() {
@@ -40,20 +39,8 @@ class UserServiceImplTest {
    }
 
    @Test
-   @DisplayName("saveUser")
-   public void whenSaveUser_shouldSaveUser() {
-      userServiceTest.saveUser(user);
-
-      ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
-      verify(userRepositoryTest).save(userArgumentCaptor.capture());
-
-      User capturedUser = userArgumentCaptor.getValue();
-      assertThat(capturedUser).isEqualTo(user);
-   }
-
-   @Test
-   @DisplayName("getAllUsers")
-   public void shouldReturnAllUsers() {
+   @DisplayName("getAllUsersService")
+   public void getAllUsers_service_repository_shouldReturnAllUsers() {
       userServiceTest.getAllUsers();
 
       given(userRepositoryTest.findAll()).willReturn(List.of(user));
@@ -62,8 +49,8 @@ class UserServiceImplTest {
    }
 
    @Test
-   @DisplayName("loadUserByUsername")
-   public void whenGivenUsername_shouldReturnUser_ifFound() {
+   @DisplayName("loadUserByUsernameIsValid")
+   public void loadUserByUsername_shouldReturnUser_whenGivenUsernameIsValid() {
       String username = "georgebacalu@email.com";
       given(userRepositoryTest.findByEmailId(username)).willReturn(user);
       userServiceTest.loadUserByUsername(username);
@@ -72,7 +59,8 @@ class UserServiceImplTest {
    }
 
    @Test
-   public void whenGivenUsername_shouldThrowException_ifNotFound() {
+   @DisplayName("loadUserByUsernameIsInValid")
+   public void loadUserByUsername_shouldThrowException_whenGivenUsernameIsInValid() {
       String username = "georgebacalu@email.com";
       given(userRepositoryTest.findByEmailId(username)).willReturn(null);
 
@@ -81,5 +69,15 @@ class UserServiceImplTest {
               .hasMessageContaining(USERNAME_NOT_FOUND);
 
       verify(userRepositoryTest, never()).findByEmailId(username);
+   }
+
+   @Test
+   @DisplayName("saveUser")
+   public void saveUser_shouldReturnUser() {
+      ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
+      verify(userRepositoryTest).save(userArgumentCaptor.capture());
+
+      User capturedUser = userArgumentCaptor.getValue();
+      assertThat(capturedUser).isEqualTo(user);
    }
 }

@@ -1,6 +1,7 @@
 package com.project.repository;
 
 import com.project.entity.User;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,21 +20,20 @@ class UserRepositoryTest {
    @Autowired
    private UserRepository userRepositoryTest;
 
-   @Test
-   @DisplayName("saveUser")
-   public void whenGivenUser_shouldSaveUser() {
+   @BeforeEach
+   void setUp() {
       userRepositoryTest.save(user);
    }
 
    @Test
-   @DisplayName("getAllUsers")
-   public void shouldReturnAllUsers() {
-      assertThat(userRepositoryTest.findAll()).isEqualTo(List.of(user));
+   @DisplayName("getAllUsersRepository")
+   public void getAllUsers_repository_shouldReturnAllUsers() {
+      assertThat(userRepositoryTest.findAll().toString()).isEqualTo(List.of(user).toString());
    }
 
    @Test
-   @DisplayName("findByEmailBy")
-   void whenGivenEmailId_shouldReturnUser() {
-      assertThat(userRepositoryTest.findByEmailId("georgebacalu@email.com")).isEqualTo(user);
+   @DisplayName("findByEmailId")
+   void findByEmailId_shouldReturnUser_whenGivenEmailId() {
+      assertThat(userRepositoryTest.findByEmailId("georgebacalu@email.com").toString()).isEqualTo(user.toString());
    }
 }

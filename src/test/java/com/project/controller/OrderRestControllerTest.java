@@ -7,14 +7,12 @@ import com.project.service.OrderService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -28,7 +26,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -50,7 +47,8 @@ class OrderRestControllerTest {
    private OrderService orderServiceTest;
 
    @Test
-   public void displayAllOrders_whenGetMethod() throws Exception {
+   @DisplayName("getAllOrders")
+   public void getAllOrders_shouldReturnAllOrders_whenGetMethod() throws Exception {
       given(orderServiceTest.getAllOrders()).willReturn(List.of(order));
 
       MvcResult result = mockMvc.perform(get("/api/client/orders")
@@ -64,7 +62,8 @@ class OrderRestControllerTest {
    }
 
    @Test
-   public void displayUserById_WhenGetMethod() throws Exception {
+   @DisplayName("getOrderByIdIsValid")
+   public void getOrderById_shouldReturnOrder_whenGetMethod_whenGivenIdToGetOrderIsValid() throws Exception {
       given(orderServiceTest.getOrderById(order.getOrderId())).willReturn(order);
 
       MvcResult result = mockMvc.perform(get("/api/client/orders/" + order.getOrderId().toString())
@@ -77,8 +76,8 @@ class OrderRestControllerTest {
    }
 
    @Test
-   @DisplayName("displayUserById_WhenGetMethod_throwException")
-   public void whenGivenIdToGetOrder_shouldThrowException_ifNotFound() throws Exception {
+   @DisplayName("getOrderByIdIsInValid")
+   public void getOrderById_shouldReturnOrder_whenGetMethod_whenGivenIdToGetOrderIsInValid() throws Exception {
       Mockito.doThrow(new ResourceNotFoundException(ORDER_WITH_ID_NOT_FOUND)).when(orderServiceTest).getOrderById(order.getOrderId());
 
       MvcResult result = mockMvc.perform(delete("/api/client/orders/" + order.getOrderId().toString())
@@ -90,7 +89,8 @@ class OrderRestControllerTest {
    }
 
    @Test
-   public void saveOrder_whenPostMethod() throws Exception {
+   @DisplayName("saveOrder_controller")
+   public void saveOrder_shouldReturnOrder_whenPostMethod() throws Exception {
       given(orderServiceTest.saveOrder(order)).willReturn(order);
 
       MvcResult result = mockMvc.perform(post("/api/client/orders")
@@ -104,7 +104,8 @@ class OrderRestControllerTest {
    }
 
    @Test
-   public void updateOrder_whenPutMethod() throws Exception {
+   @DisplayName("updateOrderByIdIsValid")
+   public void updateOrderById_shouldUpdateOrder_whenPutMethod_ifOrderIsValid() throws Exception {
       given(orderServiceTest.updateOrderById(order, order.getOrderId())).willReturn(order);
 
       MvcResult result = mockMvc.perform(put("/api/client/orders/" + order.getOrderId().toString())
@@ -118,8 +119,8 @@ class OrderRestControllerTest {
    }
 
    @Test
-   @DisplayName("updateUser_whenPutMethod_throwException")
-   public void whenGivenIdToUpdateOrder_shouldThrowException_ifNotFound() throws Exception {
+   @DisplayName("updateOrderByIdIsInvalid")
+   public void updateOrderById_shouldUpdateOrder_whenPutMethod_ifOrderIsInvalid() throws Exception {
       Mockito.doThrow(new ResourceNotFoundException(ORDER_WITH_ID_NOT_FOUND)).when(orderServiceTest).updateOrderById(order, order.getOrderId());
 
       MvcResult result = mockMvc.perform(put("/api/client/orders/" + order.getOrderId().toString())
@@ -132,7 +133,8 @@ class OrderRestControllerTest {
    }
 
    @Test
-   public void deleteOrderById_whenDeleteMethod() throws Exception {
+   @DisplayName("deleteOrderByIdIsValid")
+   public void deleteOrderById_shouldDeleteOrder_whenDeleteMethod_ifOrderIsValid() throws Exception {
       doNothing().when(orderServiceTest).deleteOrderById(order.getOrderId());
 
       MvcResult result = mockMvc.perform(delete("/api/client/orders/" + order.getOrderId().toString())
@@ -144,8 +146,8 @@ class OrderRestControllerTest {
    }
 
    @Test
-   @DisplayName("deleteOrderById_whenDeleteMethod_throwException")
-   public void whenGivenIdToDeleteOrder_shouldThrowException_ifNotFound() throws Exception {
+   @DisplayName("deleteOrderByIdIsInvalid")
+   public void deleteOrderById_shouldDeleteOrder_whenDeleteMethod_ifOrderIsInvalid() throws Exception {
       Mockito.doThrow(new ResourceNotFoundException(ORDER_WITH_ID_NOT_FOUND)).when(orderServiceTest).deleteOrderById(order.getOrderId());
 
       MvcResult result = mockMvc.perform(delete("/api/client/orders/" + order.getOrderId().toString())

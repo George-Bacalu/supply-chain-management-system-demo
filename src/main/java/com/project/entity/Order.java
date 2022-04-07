@@ -32,11 +32,11 @@ public class Order implements Serializable {
    private Double totalPrice;
 
    @Column(name = "date_created", columnDefinition = "timestamp default now()")
-   @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
+   //@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
    private LocalDateTime createdAt;
 
    @Column(name = "date_updated", columnDefinition = "timestamp default now()")
-   @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
+   //@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
    private LocalDateTime updatedAt;
 
    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

@@ -78,6 +78,9 @@ public class OrderServiceImpl implements OrderService {
          throw new InvalidDataException(ORDER_WITH_INVALID_ID, id);
       }
       Order order = getOrderById(id);
+      if (order == null) {
+         throw new ResourceNotFoundException(NO_ORDER_FOUND);
+      }
       orderRepository.delete(order);
 
    }
