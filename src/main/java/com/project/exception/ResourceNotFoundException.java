@@ -16,8 +16,4 @@ public class ResourceNotFoundException extends RuntimeException implements Seria
    public ResourceNotFoundException(String message) {
       super(message);
    }
-
-   public ResourceNotFoundException(String message, Long argument) {
-      super(MessageFormat.format(message, argument));
-   }
 }

@@ -38,7 +38,7 @@ public class OrderRestController {
    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
    public ResponseEntity<Order> saveOrder(@Valid @RequestBody Order order, BindingResult bindingResult) {
       if(bindingResult.hasErrors()) {
-         throw new InvalidDataException(INVALID_ORDER_FORMAT, order);
+         throw new InvalidDataException(INVALID_ORDER_FORMAT);
       }
       return ResponseEntity.status(HttpStatus.CREATED).body(orderService.saveOrder(order));
    }
@@ -47,7 +47,7 @@ public class OrderRestController {
    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
    public ResponseEntity<Order> updateOrderById(@Valid @RequestBody Order order, @PathVariable Long id, BindingResult bindingResult) {
       if(bindingResult.hasErrors()) {
-         throw new InvalidDataException(INVALID_ORDER_FORMAT, order);
+         throw new InvalidDataException(INVALID_ORDER_FORMAT);
       }
       return ResponseEntity.ok(orderService.updateOrderById(order, id));
    }

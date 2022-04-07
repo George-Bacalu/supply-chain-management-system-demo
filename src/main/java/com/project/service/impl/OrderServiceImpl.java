@@ -29,9 +29,9 @@ public class OrderServiceImpl implements OrderService {
    @Override
    public Order getOrderById(Long id) {
       if (id < 0) {
-         throw new InvalidDataException(ORDER_WITH_INVALID_ID, id);
+         throw new InvalidDataException(ORDER_WITH_INVALID_ID);
       }
-      return orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ORDER_WITH_ID_NOT_FOUND, id));
+      return orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ORDER_WITH_ID_NOT_FOUND));
    }
 
    @Override
@@ -40,7 +40,7 @@ public class OrderServiceImpl implements OrderService {
          throw new ResourceNotFoundException(NO_ORDER_FOUND);
       }
       if (order.getProducts().isEmpty()) {
-         throw new ProductException(INVALID_ORDER_FORMAT, order);
+         throw new ProductException(INVALID_ORDER_FORMAT);
       }
       Order orderToBeSaved = Order.builder()
               .createdAt(LocalDateTime.now())
@@ -58,10 +58,10 @@ public class OrderServiceImpl implements OrderService {
          throw new ResourceNotFoundException(NO_ORDER_FOUND);
       }
       if (id < 0) {
-         throw new InvalidDataException(ORDER_WITH_INVALID_ID, id);
+         throw new InvalidDataException(ORDER_WITH_INVALID_ID);
       }
       if (order.getProducts().isEmpty()) {
-         throw new ProductException(INVALID_ORDER_FORMAT, order);
+         throw new ProductException(INVALID_ORDER_FORMAT);
       }
       Order orderToBeUpdated = getOrderById(id);
       orderToBeUpdated.setCustomer(order.getCustomer());
@@ -75,7 +75,7 @@ public class OrderServiceImpl implements OrderService {
    @Override
    public void deleteOrderById(Long id) {
       if (id == null || id < 0) {
-         throw new InvalidDataException(ORDER_WITH_INVALID_ID, id);
+         throw new InvalidDataException(ORDER_WITH_INVALID_ID);
       }
       Order order = getOrderById(id);
       if (order == null) {

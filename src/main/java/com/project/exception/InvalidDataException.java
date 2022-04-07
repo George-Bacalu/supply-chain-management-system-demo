@@ -15,15 +15,7 @@ public class InvalidDataException extends RuntimeException implements Serializab
    @Serial
    private static final long serialVersionUID = 1L;
 
-   public InvalidDataException(String message, Long argument) {
-      super(MessageFormat.format(message, argument));
-   }
-
-   public InvalidDataException(String message, Order argument) {
-      super(MessageFormat.format(message, argument));
-   }
-
-   public InvalidDataException(String message, Product argument) {
-      super(MessageFormat.format(message, argument));
+   public InvalidDataException(String message) {
+      super(message);
    }
 }

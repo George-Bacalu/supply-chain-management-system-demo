@@ -14,7 +14,7 @@ public class ProductException extends RuntimeException implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public ProductException(String message, Order argument) {
-        super(MessageFormat.format(message, argument));
+    public ProductException(String message) {
+        super(message);
     }
 }
