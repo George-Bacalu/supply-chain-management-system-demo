@@ -25,7 +25,7 @@ public class OrderModelViewController {
    }
 
    @GetMapping("/customers")
-   public String getAllOrderCustomersView(Model model) {
+   public String getAllOrdersCustomersView(Model model) {
       model.addAttribute("customers", orderService.getAllOrders().stream().map(Order::getCustomer).collect(Collectors.toList()));
       return "orders/customers";
    }
@@ -70,6 +70,30 @@ public class OrderModelViewController {
    public String goToThirdStepOrderView(@ModelAttribute("order") Order order) {
       return "redirect:/client/orders/create-order/step3";
    }
+
+   //TODO: outsource the logic for the views returned in the get and post methods in the add order section
+
+   /*
+   @GetMapping("/create-order/{step}")
+   public String createOrderFormView(Model model, @PathVariable String step) {
+      model.addAttribute("order", new Order());
+      return switch (step) {
+         case "step1" -> "orders/create-order/step1";
+         case "step2" -> "orders/create-order/step2";
+         case "step3" -> "orders/create-order/step3";
+         default -> "error";
+      };
+   }
+
+   @PostMapping("/create-order/{next-step}")
+   public String goToNextStepOrderView(@ModelAttribute("order") Order order, @PathVariable("next-step") String step) {
+      return switch (step) {
+         case "step2" -> "redirect:/client/orders/create-order/step2";
+         case "step3" -> "redirect:/client/orders/create-order/step3";
+         default -> "error";
+      };
+   }
+   */
 
    @PostMapping("/save-new-order")
    public String saveOrderView(@ModelAttribute("order") Order order) {

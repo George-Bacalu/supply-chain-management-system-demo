@@ -9,8 +9,6 @@ import java.util.List;
 public class PriceUtils {
 
     public static Double getTotalPrice(List<Product> products) {
-        return products.stream()
-                .map(product -> product.getPrice() * product.getQuantity())
-                .reduce(0.0, Double::sum);
+        return products.stream().map(product -> product.getPrice() * product.getQuantity()).reduce(0.0, Double::sum);
     }
 }

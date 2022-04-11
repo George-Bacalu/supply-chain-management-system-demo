@@ -18,31 +18,31 @@ public class UserLoggingAspect {
 
    @Around("execution(com.project.entity.User || void com.project.service.*.*(..))")
    public Object logMethodAroundExecution(ProceedingJoinPoint joinPoint) throws Throwable {
-      log.info("entering method {} with args: {}", joinPoint.getSignature(), Arrays.toString(joinPoint.getArgs()));
+      log.info("entering user method {} with args: {}", joinPoint.getSignature(), Arrays.toString(joinPoint.getArgs()));
       Instant before = Instant.now();
 
       User user = (User) joinPoint.proceed();
 
       Instant after = Instant.now();
       long duration = Duration.between(before, after).toMillis();
-      log.info("method execution finished in {}", duration);
-      log.info("exiting method {} with args: {}", joinPoint.getSignature(), Arrays.toString(joinPoint.getArgs()));
+      log.info("user method execution finished in {}", duration);
+      log.info("exiting user method {} with args: {}", joinPoint.getSignature(), Arrays.toString(joinPoint.getArgs()));
       return user;
    }
 
    @Before("execution(com.project.entity.User || void com.project.service.*.*(..))")
    public void logMethodBeforeExecution(JoinPoint joinPoint) {
-      log.info("after method {}", joinPoint.getSignature());
+      log.info("before user method {}", joinPoint.getSignature());
    }
 
    @After("execution(com.project.entity.User || void com.project.service.*.*(..))")
    public void logMethodAfterExecution(JoinPoint joinPoint) {
-      log.info("after method {}", joinPoint.getSignature());
+      log.info("after user method {}", joinPoint.getSignature());
    }
 
    @AfterReturning(value = ("execution(com.project.entity.User || void com.project.service.*.*(..))"), returning = "user")
    public void logMethodAfterReturningExecution(JoinPoint joinPoint, User user) {
-      log.info("after returning method {} with order: {}", joinPoint.getSignature(), user);
+      log.info("after returning method {} with user: {}", joinPoint.getSignature(), user);
    }
 
    @AfterThrowing(value = ("execution(com.project.entity.User || void com.project.service.*.*(..))"), throwing = "exception")

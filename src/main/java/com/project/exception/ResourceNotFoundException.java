@@ -1,5 +1,6 @@
 package com.project.exception;
 
+import com.project.entity.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -16,4 +17,8 @@ public class ResourceNotFoundException extends RuntimeException implements Seria
    public ResourceNotFoundException(String message) {
       super(message);
    }
+
+    public ResourceNotFoundException(String message, Long id) {
+        super(MessageFormat.format(message, id));
+    }
 }

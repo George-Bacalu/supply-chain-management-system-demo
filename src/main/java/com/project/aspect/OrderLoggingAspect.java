@@ -18,26 +18,26 @@ public class OrderLoggingAspect {
 
    @Around("execution(com.project.entity.Order || void com.project.service.*.*(..))")
    public Object logMethodAroundExecution(ProceedingJoinPoint joinPoint) throws Throwable {
-      log.info("entering method {} with args: {}", joinPoint.getSignature(), Arrays.toString(joinPoint.getArgs()));
+      log.info("entering order method {} with args: {}", joinPoint.getSignature(), Arrays.toString(joinPoint.getArgs()));
       Instant before = Instant.now();
 
       Order order = (Order) joinPoint.proceed();
 
       Instant after = Instant.now();
       long duration = Duration.between(before, after).toMillis();
-      log.info("method execution finished in {}", duration);
-      log.info("exiting method {} with args: {}", joinPoint.getSignature(), Arrays.toString(joinPoint.getArgs()));
+      log.info("order method execution finished in {}", duration);
+      log.info("exiting order method {} with args: {}", joinPoint.getSignature(), Arrays.toString(joinPoint.getArgs()));
       return order;
    }
 
    @Before("execution(com.project.entity.Order || void com.project.service.*.*(..))")
    public void logMethodBeforeExecution(JoinPoint joinPoint) {
-      log.info("after method {}", joinPoint.getSignature());
+      log.info("before order method {}", joinPoint.getSignature());
    }
 
    @After("execution(com.project.entity.Order || void com.project.service.*.*(..))")
    public void logMethodAfterExecution(JoinPoint joinPoint) {
-      log.info("after method {}", joinPoint.getSignature());
+      log.info("after order method {}", joinPoint.getSignature());
    }
 
    @AfterReturning(value = ("execution(com.project.entity.Order || void com.project.service.*.*(..))"), returning = "order")

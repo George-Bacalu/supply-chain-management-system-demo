@@ -30,7 +30,7 @@ class ProductRepositoryTest {
    @Test
    @DisplayName("getAllProductsRepository")
    public void getAllProducts_repository_shouldReturnAllProducts() {
-      assertThat(productRepositoryTest.findAll().toString()).isEqualTo(products.toString());
+      assertThat(productRepositoryTest.findAll().toString()).isEqualTo(List.of(product).toString());
    }
 
    @Test

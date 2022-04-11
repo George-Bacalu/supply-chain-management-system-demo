@@ -37,7 +37,7 @@ public class ProductRestController {
    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
    public ResponseEntity<Product> saveProduct(@Valid @RequestBody Product product, BindingResult bindingResult) {
       if(bindingResult.hasErrors()) {
-         throw new InvalidDataException(INVALID_PRODUCT_FORMAT);
+         throw new InvalidDataException(INVALID_PRODUCT_FORMAT, product);
       }
       return ResponseEntity.status(HttpStatus.CREATED).body(productService.saveProduct(product));
    }
