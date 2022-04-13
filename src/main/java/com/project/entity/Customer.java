@@ -31,7 +31,6 @@ public class Customer implements Serializable {
    private String name;
 
    @Column(nullable = false)
-   //@Pattern(regexp="(^$|[0-9]{10})", message = "{customer.phoneNumber.invalid}")
-   @Pattern(regexp="^(\\+4|)?(07[0-9]{2}|02[0-9]{2}|03[0-9]{2})(\\s|\\.|)?([0-9]{3}(\\s|\\.|)){2}$")
+   @Pattern(regexp="^(\\+4|)?(07[0-9]{2}|02[0-9]{2}|03[0-9]{2})(\\s|\\.|)?([0-9]{3}(\\s|\\.|)){2}$", message = "{customer.phoneNumber.invalid}")
    private String phoneNumber;
 }

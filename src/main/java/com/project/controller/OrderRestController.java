@@ -22,6 +22,8 @@ import static com.project.constant.ClientConstants.INVALID_ORDER_FORMAT;
 @RequiredArgsConstructor
 public class OrderRestController {
 
+   //TODO: find out the reason why I get the login html page as a response whenever I sent http requests to "/api/client/orders"
+
    private final OrderService orderService;
 
    @GetMapping

@@ -19,6 +19,9 @@ import static com.project.constant.UserAuthorityConstants.*;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+   //TODO: find a way to inject dependencies in UserServiceImpl without using field injection
+   //TODO: extends the security so my app can accept different types of users and provide access to resources based on their role
+
    @Lazy
    @Autowired
    private UserService userService;

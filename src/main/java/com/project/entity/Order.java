@@ -55,4 +55,6 @@ public class Order implements Serializable {
    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
    @JoinColumn(name = "address_id", referencedColumnName = "addressId")
    private Address address;
+
+   OrderStatus orderStatus;
 }

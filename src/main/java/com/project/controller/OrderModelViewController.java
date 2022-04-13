@@ -16,6 +16,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderModelViewController {
 
+   //TODO: find a way to display the orders table dynamically considering how thymeleaf works with lists (I need to transfer the products list data to a Java list)
+   //The error I get whenever I submit the form for placing orders: java.lang.NullPointerException: Cannot invoke "java.util.List.isEmpty()" because the return value of "com.project.entity.Order.getProducts()" is null
+
    private final OrderService orderService;
 
    @GetMapping
