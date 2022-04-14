@@ -9,6 +9,24 @@
 
 <main>
     <div class="px-4 pt-3">
+        <div th:if="${param.successfulSave}">
+            <div class="alert alert-info">Your order has been saved successfully!</div>
+        </div>
+        <div th:if="${param.successfulUpdate}">
+            <div class="alert alert-info">Your order has been updated successfully!</div>
+        </div>
+        <div th:if="${param.successfulDelete}">
+            <div class="alert alert-info">Your order has been deleted successfully!</div>
+        </div>
+        <div th:if="${param.errorSave}">
+            <div class="alert alert-danger">Your order could not be saved!</div>
+        </div>
+        <div th:if="${param.errorUpdate}">
+            <div class="alert alert-danger">Your order could not be updated!</div>
+        </div>
+        <div th:if="${param.errorDelete}">
+            <div class="alert alert-danger">Your order could not be deleted!</div>
+        </div>
         <div class="row">
             <h3>Orders List</h3>
         </div>

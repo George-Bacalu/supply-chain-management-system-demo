@@ -14,15 +14,15 @@
                  style="box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2)">
                 <h3 class="text-center pt-2">Enter your customer details!</h3>
                 <div class="card-body">
-                    <form class="row g-3" th:action="@{/client/orders/create-order/step3}" th:object="${order}" method="post">
+                    <form class="row g-3" th:action="@{/client/orders/create-order/step3}" th:object="${customer}" method="post">
                         <div class="mb-3">
                             <label for="company" class="form-label">Company</label>
-                            <input type="text" id="company" name="company" th:field="*{customer.name}"
+                            <input type="text" id="company" name="company" th:field="*{name}"
                                    placeholder="Enter Company" class="form-control" required autofocus="autofocus">
                         </div>
                         <div class="mb-3">
                             <label for="phoneNumber" class="form-label">Phone Number</label>
-                            <input type="text" id="phoneNumber" name="phoneNumber" th:field="*{customer.phoneNumber}"
+                            <input type="text" id="phoneNumber" name="phoneNumber" th:field="*{phoneNumber}"
                                    placeholder="Enter Phone Number" class="form-control" required autofocus="autofocus">
                         </div>
                         <div class="mb-3">

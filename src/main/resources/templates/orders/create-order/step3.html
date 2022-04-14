@@ -14,25 +14,25 @@
                  style="box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2)">
                 <h3 class="text-center pt-2">Enter your delivery address!</h3>
                 <div class="card-body">
-                    <form class="row g-3" th:action="@{/client/orders/save-new-order}" th:object="${order}" method="post">
+                    <form class="row g-3" th:action="@{/client/orders/save-new-order}" th:object="${address}" method="post">
                         <div class="mb-3">
                             <label for="country" class="form-label">Country</label>
-                            <input type="text" id="country" name="country" th:field="*{address.country}"
+                            <input type="text" id="country" name="country" th:field="*{country}"
                                    placeholder="Enter Country" class="form-control" required autofocus="autofocus">
                         </div>
                         <div class="mb-3">
                             <label for="city" class="form-label">City</label>
-                            <input type="text" id="city" name="city" th:field="*{address.city}" placeholder="Enter City"
+                            <input type="text" id="city" name="city" th:field="*{city}" placeholder="Enter City"
                                    class="form-control" required autofocus="autofocus">
                         </div>
                         <div class="col-10">
                             <label for="street" class="form-label">Street</label>
-                            <input type="text" id="street" name="street" th:field="*{address.street}"
+                            <input type="text" id="street" name="street" th:field="*{street}"
                                    placeholder="Enter Street" class="form-control" required autofocus="autofocus">
                         </div>
                         <div class="col-2">
                             <label for="number" class="form-label">No.</label>
-                            <input type="text" id="number" name="number" th:field="*{address.number}"
+                            <input type="text" id="number" name="number" th:field="*{number}"
                                    class="form-control" required autofocus="autofocus">
                         </div>
                         <div class="mb-3">

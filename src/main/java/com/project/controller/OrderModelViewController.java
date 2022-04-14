@@ -1,16 +1,23 @@
 package com.project.controller;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.project.entity.Address;
+import com.project.entity.Customer;
 import com.project.entity.Order;
+import com.project.entity.Product;
 import com.project.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Controller
 @RequestMapping("/client/orders")
 @RequiredArgsConstructor
@@ -49,18 +56,21 @@ public class OrderModelViewController {
    @GetMapping("/create-order/step1")
    public String createOrderFormStep1View(Model model) {
       model.addAttribute("order", new Order());
+      model.addAttribute("products", new ArrayList<Product>());
       return "orders/create-order/step1";
    }
 
    @GetMapping("/create-order/step2")
    public String createOrderFormStep2View(Model model) {
       model.addAttribute("order", new Order());
+      model.addAttribute("customer", new Customer());
       return "orders/create-order/step2";
    }
 
    @GetMapping("/create-order/step3")
    public String createOrderFormStep3View(Model model) {
       model.addAttribute("order", new Order());
+      model.addAttribute("address", new Address());
       return "orders/create-order/step3";
    }
 
@@ -76,32 +86,15 @@ public class OrderModelViewController {
 
    //TODO: outsource the logic for the views returned in the get and post methods in the add order section
 
-   /*
-   @GetMapping("/create-order/{step}")
-   public String createOrderFormView(Model model, @PathVariable String step) {
-      model.addAttribute("order", new Order());
-      return switch (step) {
-         case "step1" -> "orders/create-order/step1";
-         case "step2" -> "orders/create-order/step2";
-         case "step3" -> "orders/create-order/step3";
-         default -> "error";
-      };
-   }
-
-   @PostMapping("/create-order/{next-step}")
-   public String goToNextStepOrderView(@ModelAttribute("order") Order order, @PathVariable("next-step") String step) {
-      return switch (step) {
-         case "step2" -> "redirect:/client/orders/create-order/step2";
-         case "step3" -> "redirect:/client/orders/create-order/step3";
-         default -> "error";
-      };
-   }
-   */
-
    @PostMapping("/save-new-order")
    public String saveOrderView(@ModelAttribute("order") Order order) {
-      orderService.saveOrder(order);
-      return "redirect:/client/orders";
+      try {
+         orderService.saveOrder(order);
+      } catch(Exception ex) {
+         log.info("Encounter error " + ex.getMessage() + " when trying to save your order");
+         return "redirect:/client/orders?successfulSave";
+      }
+      return "redirect:/client/orders?errorSave";
    }
 
    @GetMapping("/update-order/{id}")
@@ -112,8 +105,13 @@ public class OrderModelViewController {
 
    @PostMapping("/save-updated-order/{id}")
    public String updateOrderView(@ModelAttribute("order") Order order, @PathVariable Long id) {
-      orderService.updateOrderById(order, id);
-      return "redirect:/client/orders";
+      try {
+         orderService.updateOrderById(order, id);
+      } catch(Exception ex) {
+         log.info("Encounter error " + ex.getMessage() + " when trying to save your order");
+         return "redirect:/client/orders?successfulUpdate";
+      }
+      return "redirect:/client/orders?errorUpdate";
    }
 
    @GetMapping("/delete-order/{id}")
@@ -124,7 +122,12 @@ public class OrderModelViewController {
 
    @PostMapping("/delete-order/{id}")
    public String deleteOrderView(@PathVariable Long id) {
-      orderService.deleteOrderById(id);
-      return "redirect:/client/orders";
+      try {
+         orderService.deleteOrderById(id);
+      } catch(Exception ex) {
+         log.info("Encounter error " + ex.getMessage() + " when trying to save your order");
+         return "redirect:/client/orders?successfulDelete";
+      }
+      return "redirect:/client/orders?errorDelete";
    }
 }

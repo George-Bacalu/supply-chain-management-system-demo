@@ -15,7 +15,7 @@
                 <h3 class="text-center mt-2">Add products to your order!</h3>
                 <div class="card-body">
 
-                    <form class="row" style="height: 50vh" th:action="@{/client/orders/create-order/step2}" th:object="${order}" method="post">
+                    <form class="row" style="height: 50vh" th:action="@{/client/orders/create-order/step2}" th:object="${products}" method="post">
                         <div class="col-5" style="height: 80px">
                             <label for="product-name" class="form-label">Product Name</label>
                             <input type="text" id="product-name" class="form-control" placeholder="Product name"
@@ -38,7 +38,12 @@
                         </div>
                         <div>
                             <h4>Products</h4>
-                            <ol id="product-list"></ol>
+                            <ol id="product-list">
+<!--                                <div th:each="product: ${products}">-->
+<!--                                    <p th:text="${product.name}"></p>-->
+<!--                                    <p th:text="${product.quantity}"></p>-->
+<!--                                </div>-->
+                            </ol>
                         </div>
                         <div class="position-absolute" style="bottom:2em">
                             <button type="submit" class="btn btn-primary" id="confirm-products">Next step</button>
