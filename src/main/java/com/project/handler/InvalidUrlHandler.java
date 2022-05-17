@@ -14,10 +14,10 @@ public class InvalidUrlHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(value= HttpStatus.NOT_FOUND)
-    public ModelAndView notFound(HttpServletRequest request, ResourceNotFoundException nfe) {
+    public ModelAndView notFound(HttpServletRequest request, ResourceNotFoundException ex) {
         request.getHeader("Page not found");
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("problem", nfe.getMessage());
+        modelAndView.addObject("problem", ex.getMessage());
         modelAndView.setViewName("error");
         return modelAndView;
     }

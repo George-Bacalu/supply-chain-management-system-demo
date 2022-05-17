@@ -3,6 +3,7 @@ package com.project.controller;
 import com.project.entity.User;
 import com.project.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,10 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@Slf4j
 @Controller
 @RequestMapping
 @RequiredArgsConstructor
-public class UserRegistrationModelViewController {
+public class UserRegistrationController {
 
    private final UserService userService;
 
@@ -25,8 +27,13 @@ public class UserRegistrationModelViewController {
 
    @PostMapping("/registration")
    public String registerUserAccount(@ModelAttribute("user") User user) {
-      userService.saveUser(user);
-      return "redirect:/registration?success";
+      try {
+         userService.saveUser(user);
+      } catch(Exception ex) {
+         log.info("Encounter error " + ex.getMessage() + " when trying to authenticate your user");
+         return "redirect:/registration?success=false";
+      }
+      return "redirect:/registration?success=true";
    }
 
    @GetMapping("/login")

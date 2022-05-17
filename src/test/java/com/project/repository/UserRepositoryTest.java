@@ -1,7 +1,5 @@
 package com.project.repository;
 
-import com.project.entity.User;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,25 +13,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class UserRepositoryTest {
 
-   User user = getMockedUser();
-
    @Autowired
-   private UserRepository userRepositoryTest;
+   private UserRepository userRepository;
 
-   @BeforeEach
-   void setUp() {
-      userRepositoryTest.save(user);
+   @Test
+   @DisplayName("saveUser")
+   public void saveUser_shouldReturnSavedUser() {
+      userRepository.save(getMockedUser());
    }
 
    @Test
-   @DisplayName("getAllUsersRepository")
-   public void getAllUsers_repository_shouldReturnAllUsers() {
-      assertThat(userRepositoryTest.findAll().toString()).isEqualTo(List.of(user).toString());
+   @DisplayName("getAllUsers")
+   public void getAllUsers_shouldReturnAllUsers() {
+      assertThat(userRepository.findAll().toString()).isEqualTo(List.of(getMockedUser()).toString());
    }
 
    @Test
-   @DisplayName("findByEmailId")
-   void findByEmailId_shouldReturnUser_whenGivenEmailId() {
-      assertThat(userRepositoryTest.findByEmailId("georgebacalu@email.com").toString()).isEqualTo(user.toString());
+   @DisplayName("findUserByEmailAddress")
+   void findUserByEmailAddress_shouldReturnUser_whenGivenEmailAddress() {
+      assertThat(userRepository.findUserByEmailAddress("georgebacalu@email.com").toString()).isEqualTo(getMockedUser().toString());
    }
 }

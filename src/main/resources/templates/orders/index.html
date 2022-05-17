@@ -9,24 +9,12 @@
 
 <main>
     <div class="px-4 pt-3">
-        <div th:if="${param.successfulSave}">
-            <div class="alert alert-info">Your order has been saved successfully!</div>
-        </div>
-        <div th:if="${param.successfulUpdate}">
-            <div class="alert alert-info">Your order has been updated successfully!</div>
-        </div>
-        <div th:if="${param.successfulDelete}">
-            <div class="alert alert-info">Your order has been deleted successfully!</div>
-        </div>
-        <div th:if="${param.errorSave}">
-            <div class="alert alert-danger">Your order could not be saved!</div>
-        </div>
-        <div th:if="${param.errorUpdate}">
-            <div class="alert alert-danger">Your order could not be updated!</div>
-        </div>
-        <div th:if="${param.errorDelete}">
-            <div class="alert alert-danger">Your order could not be deleted!</div>
-        </div>
+        <div th:if="${param.saved eq true}"><div class="alert alert-info">Your order has been saved successfully!</div></div>
+        <div th:if="${param.updated eq true}"><div class="alert alert-info">Your order has been updated successfully!</div></div>
+        <div th:if="${param.deleted eq true}"><div class="alert alert-info">Your order has been deleted successfully!</div></div>
+        <div th:unless="${param.saved eq true}"><div class="alert alert-danger">Your order could not be saved!</div></div>
+        <div th:unless="${param.updated eq true}"><div class="alert alert-danger">Your order could not be updated!</div></div>
+        <div th:unless="${param.deleted eq true}"><div class="alert alert-danger">Your order could not be deleted!</div></div>
         <div class="row">
             <h3>Orders List</h3>
         </div>
@@ -67,17 +55,6 @@
                     <td>
                         <a th:href="@{/client/orders/update-order/{id}(id=1)}" class="btn btn-primary">Update</a>
                         <a th:href="@{/client/orders/delete-order/{id}(id=1)}" class="btn btn-danger">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>2</td>
-                    <td>05.04.2022 20:47:30</td>
-                    <td>05.04.2022 20:47:30</td>
-                    <td>2</td>
-                    <td>
-                        <a th:href="@{/client/orders/update-order/{id}(id=2)}" class="btn btn-primary">Update</a>
-                        <a th:href="@{/client/orders/delete-order/{id}(id=2)}" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
             </tbody>

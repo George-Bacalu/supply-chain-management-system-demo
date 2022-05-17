@@ -21,25 +21,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="order: ${orders}">
-                    <td th:text="${order.orderId}"></td>
-                    <td th:each="product: ${order.products}" th:rows="${order.products.size()}">
-                        <span th:text="${product.productId}"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td rowspan="1">
-                        <p>1</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td rowspan="2">
-                        <p>1</p>
-                        <p>2</p>
-                    </td>
-                </tr>
+                    <tr th:each="order: ${orders}">
+                        <td th:text="${order.orderId}"></td>
+                        <td th:each="product: ${order.products}" th:rows="${order.products.size()}">
+                            <span th:text="${product.productId}"></span>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -54,24 +41,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="product: ${products}">
-                    <td th:text="${product.productId}"></td>
-                    <td th:text="${product.name}"></td>
-                    <td th:text="${product.price}"></td>
-                    <td th:text="${product.quantity}"></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Shoes Order</td>
-                    <td>180 RON</td>
-                    <td>100</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>T-Shirts Order</td>
-                    <td>70 RON</td>
-                    <td>150</td>
-                </tr>
+                    <tr th:each="product: ${products}">
+                        <td th:text="${product.productId}"></td>
+                        <td th:text="${product.name}"></td>
+                        <td th:text="${product.price}"></td>
+                        <td th:text="${product.quantity}"></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

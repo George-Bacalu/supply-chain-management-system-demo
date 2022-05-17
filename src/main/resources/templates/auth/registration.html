@@ -9,10 +9,10 @@
         <div class="row d-flex justify-content-center align-items-center" style="height: 100vh">
             <div class="card border-dark" style="box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2)">
                 <div class="text-center my-3"><h3>REGISTER HERE!</h3></div>
-                <div th:if="${param.success}">
+                <div th:if="${param.success eq true}">
                     <div class="alert alert-info">You've successfully registered to the app!</div>
                 </div>
-                <div th:if="${param.error}">
+                <div th:if="${param.success eq false}">
                     <div class="alert alert-danger">Something went wrong with the authentication!</div>
                 </div>
                 <form th:action="@{/registration}" method="post" th:object="${user}">
@@ -28,7 +28,7 @@
                         <label for="email" class="form-label">Email Address</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text">@</span>
-                            <input id="email" type="email" class="form-control" th:field="*{emailId}" placeholder="Enter Email Address" aria-label="email" aria-describedby="email"
+                            <input id="email" type="email" class="form-control" th:field="*{emailAddress}" placeholder="Enter Email Address" aria-label="email" aria-describedby="email"
                                    required autofocus="autofocus"/>
                         </div>
                     </div>
@@ -37,17 +37,17 @@
                         <input id="password" type="password" class="form-control" th:field="*{password}" placeholder="Enter Password" required autofocus="autofocus"/>
                     </div>
                     <div class="mb-3">
-                        <legend>Select your role:</legend>
+                        <legend>Select your authority:</legend>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" value="role" id="client">
+                            <input class="form-check-input" type="checkbox" value="authority" id="client">
                             <label class="form-check-label" for="client">Client</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" value="role" id="manufacturer">
+                            <input class="form-check-input" type="checkbox" value="authority" id="manufacturer">
                             <label class="form-check-label" for="manufacturer">Manufacturer</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" value="role" id="admin">
+                            <input class="form-check-input" type="checkbox" value="authority" id="admin">
                             <label class="form-check-label" for="admin">Admin</label>
                         </div>
                     </div>

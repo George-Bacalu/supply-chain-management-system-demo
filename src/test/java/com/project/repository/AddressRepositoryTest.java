@@ -1,7 +1,5 @@
 package com.project.repository;
 
-import com.project.entity.Address;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,25 +13,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class AddressRepositoryTest {
 
-    Address address = getMockedAddress();
-
     @Autowired
-    private AddressRepository addressRepositoryTest;
+    private AddressRepository addressRepository;
 
-    @BeforeEach
-    void setUp() {
-        addressRepositoryTest.save(address);
+    @Test
+    @DisplayName("saveAddress")
+    public void saveAddress_shouldReturnSavedAddress() {
+        addressRepository.save(getMockedAddress());
     }
 
     @Test
-    @DisplayName("getAllCustomers")
-    public void getAllCustomers_shouldReturnAllCustomers() {
-        assertThat(addressRepositoryTest.findAll().toString()).isEqualTo(List.of(address).toString());
+    @DisplayName("getAllAddresses")
+    public void getAllAddresses_shouldReturnAllAddresses() {
+        assertThat(addressRepository.findAll().toString()).isEqualTo(List.of(getMockedAddress()).toString());
     }
 
     @Test
     @DisplayName("findAddressByCity")
     void findAddressByCity_shouldReturnAddress_whenGivenCity() {
-        assertThat(addressRepositoryTest.findAddressByCity("Brasov").toString()).isEqualTo(List.of(address).toString());
+        assertThat(addressRepository.findAddressByCity("Brasov").toString()).isEqualTo(List.of(getMockedAddress()).toString());
     }
 }

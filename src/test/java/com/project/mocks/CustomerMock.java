@@ -8,6 +8,11 @@ import lombok.NoArgsConstructor;
 public class CustomerMock {
 
     public static Customer getMockedCustomer() {
-        return Customer.builder().customerId(1L).name("Adidas").phoneNumber("0000000000").build();
+        return Customer.builder()
+                .customerId(1L)
+                .name("Adidas")
+                .phoneNumber("+40712345678")
+                //.orders(List.of(getMockedOrder()))
+                .build();
     }
 }

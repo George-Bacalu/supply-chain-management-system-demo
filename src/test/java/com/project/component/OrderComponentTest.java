@@ -1,6 +1,7 @@
-package com.project.controller;
+package com.project.component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.controller.OrderRestController;
 import com.project.entity.Order;
 import com.project.exception.OrderNotFoundException;
 import com.project.service.OrderService;
@@ -34,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class OrderRestControllerTest {
+class OrderComponentTest {
 
    //private static BindingResult bindingResult;
    private static final Order order = getMockedOrder();
@@ -111,7 +112,7 @@ class OrderRestControllerTest {
    public void getOrderById_shouldThrowException_whenOrderWithIdDoesNotExist_whenGetRequest() throws Exception {
       Mockito.doThrow(new OrderNotFoundException(ORDER_WITH_ID_NOT_FOUND)).when(orderService).getOrderById(order.getOrderId());
 
-      MvcResult result = mockMvc.perform(get("/api/client/orders/" + order.getOrderId().toString())
+      MvcResult result = mockMvc.perform(delete("/api/client/orders/" + order.getOrderId().toString())
                       .contentType(MediaType.APPLICATION_JSON))
               .andExpect(status().isNotFound())
               .andReturn();

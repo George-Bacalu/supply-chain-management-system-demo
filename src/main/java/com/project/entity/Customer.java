@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serial;
@@ -26,11 +27,11 @@ public class Customer implements Serializable {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long customerId;
 
-   @Column(nullable = false)
-   @Size(max = 30, message = "{customer.name.invalid}")
+   @NotNull
+   @Size(max = 30)
    private String name;
 
-   @Column(nullable = false)
-   @Pattern(regexp="^(\\+4|)?(07[0-9]{2}|02[0-9]{2}|03[0-9]{2})(\\s|\\.|)?([0-9]{3}(\\s|\\.|)){2}$", message = "{customer.phoneNumber.invalid}")
+   @NotNull
+   @Pattern(regexp="^(^$|(07[0-9]{8}))", message = "The introduced phone number is invalid")
    private String phoneNumber;
 }

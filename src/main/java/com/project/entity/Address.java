@@ -1,9 +1,6 @@
 package com.project.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
@@ -26,19 +23,19 @@ public class Address implements Serializable {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long addressId;
 
-   @Column(nullable = false)
-   @Size(max = 30, message = "{address.country.invalid}")
+   @NotNull
+   @Size(max = 30)
    private String country;
 
-   @Column(nullable = false)
-   @Size(max = 30, message = "{address.city.invalid}")
+   @NotNull
+   @Size(max = 30)
    private String city;
 
-   @Column(nullable = false)
-   @Size(max = 30, message = "{address.street.invalid}")
+   @NotNull
+   @Size(max = 30)
    private String street;
 
-   @Column(nullable = false)
-   @Range(min = 1, max = 1000, message = "{address.number.invalid}")
+   @NotNull
+   @Range(min = 1, max = 1000)
    private Integer number;
 }

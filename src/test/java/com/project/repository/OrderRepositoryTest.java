@@ -1,7 +1,5 @@
 package com.project.repository;
 
-import com.project.entity.Order;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,52 +9,49 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
 
-import static com.project.mocks.AddressMock.getMockedAddress;
-import static com.project.mocks.CustomerMock.getMockedCustomer;
 import static com.project.mocks.OrderMock.getMockedOrder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class OrderRepositoryTest {
 
-   Order order = getMockedOrder();
-
    @Autowired
-   private OrderRepository orderRepositoryTest;
+   private OrderRepository orderRepository;
 
-   @BeforeEach
-   void setUp() {
-      orderRepositoryTest.save(order);
+   @Test
+   @DisplayName("saveOrder")
+   void saveOrder_shouldReturnSavedOrder() {
+      orderRepository.save(getMockedOrder());
    }
 
    @Test
    @DisplayName("getAllOrdersRepository")
    public void getAllOrders_repository_shouldReturnAllOrders() {
-      assertThat(orderRepositoryTest.findAll().toString()).isEqualTo(List.of(order).toString());
+      assertThat(orderRepository.findAll().toString()).isEqualTo(List.of(getMockedOrder()).toString());
    }
 
    @Test
    @DisplayName("findOrderByCustomer_Name")
    public void findOrderByCustomer_Name_shouldReturnOrders_whenGivenName() {
-      assertThat(orderRepositoryTest.findOrderByCustomer_Name(getMockedCustomer().getName()).toString()).isEqualTo(List.of(order).toString());
+      assertThat(orderRepository.findOrderByCustomer_Name("Adidas").toString()).isEqualTo(List.of(getMockedOrder()).toString());
    }
 
    @Test
    @DisplayName("findOrderByAddress_Country")
    public void findOrderByAddress_Country_shouldReturnOrders_whenGivenCountry() {
-      assertThat(orderRepositoryTest.findOrderByAddress_Country(getMockedAddress().getCountry()).toString()).isEqualTo(List.of(order).toString());
+      assertThat(orderRepository.findOrderByAddress_Country("Romania").toString()).isEqualTo(List.of(getMockedOrder()).toString());
    }
 
    @Test
    @DisplayName("findOrderByAddress_City")
-   public void findOrderByAddress_City_shouldReturnOrders_whenGivenName() {
-      assertThat(orderRepositoryTest.findOrderByAddress_City(getMockedAddress().getCity()).toString()).isEqualTo(List.of(order).toString());
+   public void findOrderByAddress_City_shouldReturnOrders_whenGivenCity() {
+      assertThat(orderRepository.findOrderByAddress_City("Brasov").toString()).isEqualTo(List.of(getMockedOrder()).toString());
    }
 
    @Test
    @DisplayName("findOrderByAddress_AddressId")
    public void findOrderByAddress_AddressId_shouldReturnOrders_whenGivenName() {
-      assertThat(orderRepositoryTest.findOrderByAddress_AddressId(getMockedAddress().getAddressId()).toString()).isEqualTo(List.of(order).toString());
+      assertThat(orderRepository.findOrderByAddress_AddressId(1L).toString()).isEqualTo(List.of(getMockedOrder()).toString());
    }
 
    @Test
@@ -64,6 +59,6 @@ class OrderRepositoryTest {
    public void findOrderByCreatedAtBetween_shouldReturnOrders_whenGivenName() {
      LocalDateTime start = LocalDateTime.of(2022, Month.JANUARY, 29, 19, 30, 40);
      LocalDateTime end = LocalDateTime.of(2022, Month.MAY, 29, 19, 30, 40);
-      assertThat(orderRepositoryTest.findOrderByCreatedAtBetween(start, end).toString()).isEqualTo(List.of(order).toString());
+      assertThat(orderRepository.findOrderByCreatedAtBetween(start, end).toString()).isEqualTo(List.of(getMockedOrder()).toString());
    }
 }

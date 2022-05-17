@@ -1,7 +1,5 @@
 package com.project.repository;
 
-import com.project.entity.Customer;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,36 +9,34 @@ import java.util.List;
 
 import static com.project.mocks.CustomerMock.getMockedCustomer;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CustomerRepositoryTest {
 
-    Customer customer = getMockedCustomer();
-
     @Autowired
-    private CustomerRepository customerRepositoryTest;
+    private CustomerRepository customerRepository;
 
-    @BeforeEach
-    void setUp() {
-        customerRepositoryTest.save(customer);
+    @Test
+    @DisplayName("saveCustomer")
+    public void saveCustomer_shouldReturnSavedCustomer() {
+        customerRepository.save(getMockedCustomer());
     }
 
     @Test
     @DisplayName("getAllCustomers")
     public void getAllCustomers_shouldReturnAllCustomers() {
-        assertThat(customerRepositoryTest.findAll().toString()).isEqualTo(List.of(customer).toString());
+        assertThat(customerRepository.findAll().toString()).isEqualTo(List.of(getMockedCustomer()).toString());
     }
 
     @Test
     @DisplayName("findCustomerByName")
     void findCustomerByName_shouldReturnCustomer_whenGivenName() {
-        assertThat(customerRepositoryTest.findCustomerByName("Adidas").toString()).isEqualTo(customer.toString());
+        assertThat(customerRepository.findCustomerByName("Adidas").toString()).isEqualTo(getMockedCustomer().toString());
     }
 
     @Test
     @DisplayName("findCustomerByPhoneNumber")
     void findCustomerByPhoneNumber_shouldReturnCustomer_whenGivenPhoneNumber() {
-        assertThat(customerRepositoryTest.findCustomerByPhoneNumber("0000000000").toString()).isEqualTo(customer.toString());
+        assertThat(customerRepository.findCustomerByPhoneNumber("+40712345678").toString()).isEqualTo(getMockedCustomer().toString());
     }
 }

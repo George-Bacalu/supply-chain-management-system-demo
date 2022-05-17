@@ -16,7 +16,7 @@
                 <div class="card-body">
                     <form class="row g-3" th:action="@{/client/orders/save-new-order}" th:object="${address}" method="post">
                         <div class="mb-3">
-                            <label for="country" class="form-label">Country</label>
+                            <label for="country" class="form-label" >Country</label>
                             <input type="text" id="country" name="country" th:field="*{country}"
                                    placeholder="Enter Country" class="form-control" required autofocus="autofocus">
                         </div>

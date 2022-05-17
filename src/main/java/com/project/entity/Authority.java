@@ -1,5 +1,6 @@
 package com.project.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,12 +13,17 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "authorities")
+public class Authority {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private Long roleId;
+   private Long authorityId;
 
    private String name;
+
+   @JsonIgnore
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "user_id")
+   private User user;
 }

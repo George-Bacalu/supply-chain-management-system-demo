@@ -2,11 +2,11 @@ package com.project.service.impl;
 
 import com.project.entity.User;
 import com.project.repository.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -25,59 +25,54 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
 
-   User user = getMockedUser();
-
    @Mock
-   private UserRepository userRepositoryTest;
-
+   private UserRepository userRepository;
    @InjectMocks
-   private UserServiceImpl userServiceTest;
+   private UserServiceImpl userService;
 
-   @BeforeEach
-   public void setUp() {
-      userServiceTest = new UserServiceImpl(userRepositoryTest);
-   }
-
-   @Test
-   @DisplayName("getAllUsersService")
-   public void getAllUsers_service_repository_shouldReturnAllUsers() {
-      userServiceTest.getAllUsers();
-
-      given(userRepositoryTest.findAll()).willReturn(List.of(user));
-
-      verify(userRepositoryTest).findAll();
-   }
-
-   @Test
-   @DisplayName("loadUserByUsernameIsValid")
-   public void loadUserByUsername_shouldReturnUser_whenGivenUsernameIsValid() {
-      String username = "georgebacalu@email.com";
-      given(userRepositoryTest.findByEmailId(username)).willReturn(user);
-      userServiceTest.loadUserByUsername(username);
-
-      verify(userRepositoryTest).findByEmailId(username);
-   }
-
-   @Test
-   @DisplayName("loadUserByUsernameIsInValid")
-   public void loadUserByUsername_shouldThrowException_whenGivenUsernameIsInValid() {
-      String username = "georgebacalu@email.com";
-      given(userRepositoryTest.findByEmailId(username)).willReturn(null);
-
-      assertThatThrownBy(() -> userServiceTest.loadUserByUsername(username))
-              .isInstanceOf(UsernameNotFoundException.class)
-              .hasMessageContaining(USERNAME_NOT_FOUND);
-
-      verify(userRepositoryTest, never()).findByEmailId(username);
-   }
+   @Captor
+   private ArgumentCaptor<User> userCaptor;
 
    @Test
    @DisplayName("saveUser")
    public void saveUser_shouldReturnUser() {
-      ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
-      verify(userRepositoryTest).save(userArgumentCaptor.capture());
+      given(userRepository.save(getMockedUser())).willReturn(getMockedUser());
 
-      User capturedUser = userArgumentCaptor.getValue();
-      assertThat(capturedUser).isEqualTo(user);
+      verify(userRepository).save(userCaptor.capture());
+
+      assertThat(userCaptor.getValue()).isEqualTo(getMockedUser());
+   }
+
+   @Test
+   @DisplayName("getAllUsers")
+   public void getAllUsers_shouldReturnAllUsers() {
+      userService.getAllUsers();
+
+      given(userRepository.findAll()).willReturn(List.of(getMockedUser()));
+
+      verify(userRepository).findAll();
+   }
+
+   @Test
+   @DisplayName("whenValidUsername_loadUserByUsername")
+   public void loadUserByUsername_shouldReturnUser_whenGivenUsernameIsValid() {
+      String username = "georgebacalu@email.com";
+      given(userRepository.findUserByEmailAddress(username)).willReturn(getMockedUser());
+      userService.loadUserByUsername(username);
+
+      verify(userRepository).findUserByEmailAddress(username);
+   }
+
+   @Test
+   @DisplayName("whenInvalidUsername_throwException")
+   public void loadUserByUsername_shouldThrowException_whenGivenUsernameIsInvalid() {
+      String username = "georgebacalu.email.com";
+      given(userRepository.findUserByEmailAddress(username)).willReturn(null);
+
+      assertThatThrownBy(() -> userService.loadUserByUsername(username))
+              .isInstanceOf(UsernameNotFoundException.class)
+              .hasMessageContaining(USERNAME_NOT_FOUND);
+
+      verify(userRepository, never()).findUserByEmailAddress(username);
    }
 }

@@ -8,6 +8,12 @@ import lombok.NoArgsConstructor;
 public class AddressMock {
 
     public static Address getMockedAddress() {
-        return Address.builder().addressId(1L).country("Romania").city("Brasov").street("Turnului").number(12).build();
+        return Address.builder()
+                .addressId(1L)
+                .country("Romania")
+                .city("Brasov")
+                .street("Turnului")
+                .number(5)
+                .build();
     }
 }

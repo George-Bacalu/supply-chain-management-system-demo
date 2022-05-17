@@ -1,8 +1,6 @@
 package com.project.handler;
 
-import com.project.exception.InvalidDataException;
-import com.project.exception.ProductException;
-import com.project.exception.ResourceNotFoundException;
+import com.project.exception.*;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -26,16 +24,37 @@ public class GlobalExceptionHandler {
    }
 
    @ExceptionHandler(InvalidDataException.class)
-   @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+   @ResponseStatus(HttpStatus.BAD_REQUEST)
    public ResponseEntity<String> invalidDataExceptionHandler(HttpServletRequest request, Exception ex) {
       request.getHeader("Method Not Allowed");
-      return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).contentType(MediaType.APPLICATION_JSON).body("Status: Invalid passed data: " + ex.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON).body("Status: Invalid passed data: " + ex.getMessage());
    }
 
-   @ExceptionHandler(ProductException.class)
-   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-   public ResponseEntity<String> productExceptionHandler(HttpServletRequest request, Exception ex) {
+   @ExceptionHandler(ProductNotFoundException.class)
+   @ResponseStatus(HttpStatus.NOT_FOUND)
+   public ResponseEntity<String> productNotFoundExceptionHandler(HttpServletRequest request, Exception ex) {
+      request.getHeader("Products not found");
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON).body("Status: Products not found: " + ex.getMessage());
+   }
+
+   @ExceptionHandler(InvalidProductException.class)
+   @ResponseStatus(HttpStatus.BAD_REQUEST)
+   public ResponseEntity<String> invalidProductExceptionHandler(HttpServletRequest request, Exception ex) {
       request.getHeader("Invalid request of retrieving products");
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON).body("Status: Invalid request of retrieving products: " + ex.getMessage());
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.APPLICATION_JSON).body("Status: Invalid request of retrieving products: " + ex.getMessage());
+   }
+
+   @ExceptionHandler(OrderNotFoundException.class)
+   @ResponseStatus(HttpStatus.NOT_FOUND)
+   public ResponseEntity<String> orderNotFoundExceptionHandler(HttpServletRequest request, Exception ex) {
+      request.getHeader("Orders not found");
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(MediaType.APPLICATION_JSON).body("Status: Orders not found: " + ex.getMessage());
+   }
+
+   @ExceptionHandler(InvalidOrderException.class)
+   @ResponseStatus(HttpStatus.BAD_REQUEST)
+   public ResponseEntity<String> invalidOrderExceptionHandler(HttpServletRequest request, Exception ex) {
+      request.getHeader("Invalid request of retrieving orders");
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.APPLICATION_JSON).body("Status: Invalid request of retrieving orders: " + ex.getMessage());
    }
 }

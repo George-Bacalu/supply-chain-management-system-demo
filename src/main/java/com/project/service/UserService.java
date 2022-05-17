@@ -8,5 +8,6 @@ import java.util.List;
 public interface UserService extends UserDetailsService {
 
    List<User> getAllUsers();
+
    User saveUser(User user);
 }

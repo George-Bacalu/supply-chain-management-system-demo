@@ -4,9 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serial;
 import java.io.Serializable;
@@ -28,33 +31,35 @@ public class Order implements Serializable {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long orderId;
 
-   @Column(nullable = false)
    private Double totalPrice;
 
-   @Column(name = "date_created", columnDefinition = "timestamp default now()")
-   @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
-   private LocalDateTime createdAt = LocalDateTime.now().withNano(0);
+   @Column(name = "date_created", updatable = false)
+   @DateTimeFormat(pattern = "dd.mm.yyyy hh:mm:ss")
+   @CreationTimestamp
+   private LocalDateTime createdAt;
 
-   @Column(name = "date_updated", columnDefinition = "timestamp default now()")
-   @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
+   @Column(name = "date_updated")
+   @DateTimeFormat(pattern = "dd.mm.yyyy hh:mm:ss")
+   @UpdateTimestamp
    private LocalDateTime updatedAt;
 
    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
    @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
    private Customer customer;
 
-   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @OneToMany(cascade = CascadeType.ALL)
    @JoinTable(
            name = "order_products",
            joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "orderId"),
            inverseJoinColumns = @JoinColumn( name = "product_id", referencedColumnName = "productId")
    )
-   @Size(max = 50, message = "{order.products.invalid}")
+   @Size(max = 30)
    private List<Product> products;
 
    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
    @JoinColumn(name = "address_id", referencedColumnName = "addressId")
    private Address address;
 
-   OrderStatus orderStatus;
+   @NotNull
+   private OrderStatus orderStatus;
 }

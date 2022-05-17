@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serial;
 import java.io.Serializable;
@@ -26,15 +27,15 @@ public class Product implements Serializable {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long productId;
 
-   @Column(nullable = false)
-   @Size(max = 30, message = "{product.name.invalid}")
+   @NotNull
+   @Size(max = 30)
    private String name;
 
-   @Column(nullable = false)
-   @Range(min = 1, max = 1000, message = "{product.price.invalid}")
+   @NotNull
+   @Range(min = 1, max = 1000)
    private Double price;
 
-   @Column(nullable = false)
-   @Range(min = 1, max = 1000, message = "{product.quantity.invalid}")
+   @NotNull
+   @Range(min = 1, max = 1000)
    private Integer quantity;
 }

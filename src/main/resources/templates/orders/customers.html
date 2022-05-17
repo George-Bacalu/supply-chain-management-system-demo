@@ -22,21 +22,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="customer: ${customers}">
-                    <td th:text="${customer.customerId}"></td>
-                    <td th:text="${customer.name}"></td>
-                    <td th:text="${customer.phoneNumber}"></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Adidas</td>
-                    <td>0000000001</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Nike</td>
-                    <td>0000000002</td>
-                </tr>
+                    <tr th:each="customer: ${customers}">
+                        <td th:text="${customer.customerId}"></td>
+                        <td th:text="${customer.name}"></td>
+                        <td th:text="${customer.phoneNumber}"></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

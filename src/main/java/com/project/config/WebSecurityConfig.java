@@ -1,7 +1,7 @@
 package com.project.config;
 
 import com.project.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,16 +15,15 @@ import static com.project.constant.UserAuthorityConstants.*;
 
 @Configuration
 @ComponentScan({"com.project.aspect", "com.project.repository", "com.project.service", "com.project.controller"})
+@RequiredArgsConstructor
 @EnableAspectJAutoProxy
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-   //TODO: find a way to inject dependencies in UserServiceImpl without using field injection
    //TODO: extends the security so my app can accept different types of users and provide access to resources based on their role
 
    @Lazy
-   @Autowired
-   private UserService userService;
+   private final UserService userService;
 
    @Bean
    public BCryptPasswordEncoder passwordEncoder() {
@@ -46,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
    @Override
    protected void configure(HttpSecurity http) throws Exception {
+      http.httpBasic();
       http.authorizeRequests()
               .mvcMatchers("/admin").hasRole(ROLE_ADMIN)
               .mvcMatchers("/manufacturer").hasAnyRole(ROLE_ADMIN, ROLE_MANUFACTURER)

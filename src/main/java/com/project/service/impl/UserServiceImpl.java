@@ -1,11 +1,10 @@
 package com.project.service.impl;
 
-import com.project.entity.Role;
+import com.project.entity.Authority;
 import com.project.entity.User;
 import com.project.repository.UserRepository;
 import com.project.service.UserService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,13 +19,16 @@ import java.util.stream.Collectors;
 import static com.project.constant.UserAuthorityConstants.USERNAME_NOT_FOUND;
 
 @Service
-@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
    private final UserRepository userRepository;
+   private final BCryptPasswordEncoder passwordEncoder;
 
-   @Autowired
-   private BCryptPasswordEncoder passwordEncoder;
+   @Lazy
+   public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+      this.userRepository = userRepository;
+      this.passwordEncoder = passwordEncoder;
+   }
 
    @Override
    public List<User> getAllUsers() {
@@ -35,28 +37,29 @@ public class UserServiceImpl implements UserService {
 
    @Override
    public User saveUser(User user) {
-      Long userId = user.getUserId();
-      String firstName = user.getFirstName();
-      String lastName = user.getLastName();
-      String email = user.getEmailId();
-      String password = passwordEncoder.encode(user.getPassword());
-      List<Role> roles = user.getRoles();
-      return userRepository.save(new User(userId, firstName, lastName, email, password, roles));
+      return userRepository.save(User.builder()
+              .userId(user.getUserId())
+              .firstName(user.getFirstName())
+              .lastName(user.getLastName())
+              .emailAddress(user.getEmailAddress())
+              .password(passwordEncoder.encode(user.getPassword()))
+              .authorities(user.getAuthorities())
+              .build());
    }
 
    @Override
    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-      User user = userRepository.findByEmailId(username);
+      User user = userRepository.findUserByEmailAddress(username);
       if(user == null) {
          throw new UsernameNotFoundException(USERNAME_NOT_FOUND);
       }
-      String email = user.getEmailId();
+      String email = user.getEmailAddress();
       String password = user.getPassword();
-      Collection<? extends GrantedAuthority> roles = mapRolesToAuthorities(user.getRoles());
+      Collection<? extends GrantedAuthority> roles = mapRolesToAuthorities(user.getAuthorities());
       return new org.springframework.security.core.userdetails.User(email, password, roles);
    }
 
-   private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-      return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+   private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Authority> authorities) {
+      return authorities.stream().map(authority -> new SimpleGrantedAuthority(authority.getName())).collect(Collectors.toList());
    }
 }

@@ -1,4 +1,4 @@
-package com.project.controller;
+package com.project.component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.entity.User;
@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class UserRegistrationRestControllerTest {
+class UserRegistrationComponentTest {
 
    User user = getMockedUser();
 

@@ -1,7 +1,7 @@
 package com.project.controller;
 
 import com.project.entity.Product;
-import com.project.exception.InvalidDataException;
+import com.project.exception.InvalidProductException;
 import com.project.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,7 +37,7 @@ public class ProductRestController {
    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
    public ResponseEntity<Product> saveProduct(@Valid @RequestBody Product product, BindingResult bindingResult) {
       if(bindingResult.hasErrors()) {
-         throw new InvalidDataException(INVALID_PRODUCT_FORMAT, product);
+         throw new InvalidProductException(INVALID_PRODUCT_FORMAT, product);
       }
       return ResponseEntity.status(HttpStatus.CREATED).body(productService.saveProduct(product));
    }

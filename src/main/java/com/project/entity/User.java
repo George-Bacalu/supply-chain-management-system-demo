@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
@@ -13,31 +16,28 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "emailId"))
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "emailAddress"))
 public class User {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long userId;
 
+   @NotNull
+   @Size(max = 20)
    private String firstName;
+
+   @NotNull
+   @Size(max = 20)
    private String lastName;
-   private String emailId;
+
+   @NotNull
+   @Email
+   private String emailAddress;
+
+   @NotNull
    private String password;
 
-   @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-   @JoinTable(
-           name = "users_roles",
-           joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"),
-           inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "roleId")
-   )
-   private List<Role> roles;
-
-   public User(String firstName, String lastName, String emailId, String password, List<Role> roles) {
-      this.firstName = firstName;
-      this.lastName = lastName;
-      this.emailId = emailId;
-      this.password = password;
-      this.roles = roles;
-   }
+   @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+   private List<Authority> authorities;
 }
