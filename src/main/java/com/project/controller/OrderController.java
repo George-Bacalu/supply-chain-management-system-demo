@@ -12,7 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,32 +33,33 @@ public class OrderController {
    //TODO: find a way to display the orders table dynamically considering how thymeleaf works with lists (I need to map the products list data back to a Java list)
    //The error I get whenever I submit the form for placing orders: java.lang.NullPointerException: Cannot invoke "java.util.List.isEmpty()" because the return value of "com.project.entity.Order.getProducts()" is null
 
-   private static Order order;
+   private final Order order = new Order();
 
    private final OrderService orderService;
+   private final List<Order> orders = orderService.getAllOrders();
 
    @GetMapping
    public String getAllOrdersView(Model model) {
-      model.addAttribute("orders", orderService.getAllOrders());
+      model.addAttribute("orders", orders);
       return "orders/index";
    }
 
    @GetMapping("/customers")
    public String getAllOrdersCustomersView(Model model) {
-      model.addAttribute("customers", orderService.getAllOrders().stream().map(Order::getCustomer).collect(Collectors.toList()));
+      model.addAttribute("customers", orders.stream().map(Order::getCustomer).collect(Collectors.toList()));
       return "orders/customers";
    }
 
    @GetMapping("/addresses")
    public String getAllOrdersAddressesView(Model model) {
-      model.addAttribute("addresses", orderService.getAllOrders().stream().map(Order::getAddress).collect(Collectors.toList()));
+      model.addAttribute("addresses", orders.stream().map(Order::getAddress).collect(Collectors.toList()));
       return "orders/addresses";
    }
 
    @GetMapping("/products")
    public String getAllOrdersProductsView(ModelMap model) {
-      model.addAttribute("orders", orderService.getAllOrders());
-      model.addAttribute("products", orderService.getAllOrders().stream().map(Order::getProducts).flatMap(List::stream).collect(Collectors.toList()));
+      model.addAttribute("orders", orders);
+      model.addAttribute("products", orders.stream().map(Order::getProducts).flatMap(List::stream).collect(Collectors.toList()));
       return "orders/products";
    }
 
@@ -131,7 +136,7 @@ public class OrderController {
          }
          orderService.updateOrderById(order, id);
       } catch(Exception ex) {
-         log.info("Encounter error " + ex.getMessage() + " when trying to save your order");
+         log.info("Encounter error " + ex.getMessage() + " when trying to update your order");
          return "redirect:/client/orders?updated=false";
       }
       return "redirect:/client/orders?updated=true";
@@ -151,7 +156,7 @@ public class OrderController {
          }
          orderService.deleteOrderById(id);
       } catch(Exception ex) {
-         log.info("Encounter error " + ex.getMessage() + " when trying to save your order");
+         log.info("Encounter error " + ex.getMessage() + " when trying to delete your order");
          return "redirect:/client/orders?deleted=false";
       }
       return "redirect:/client/orders?deleted=true";

@@ -2,7 +2,11 @@ package com.project.config;
 
 import com.project.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,7 +15,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import static com.project.constant.UserAuthorityConstants.*;
+import static com.project.constant.UserAuthorityConstants.ROLE_ADMIN;
+import static com.project.constant.UserAuthorityConstants.ROLE_CLIENT;
+import static com.project.constant.UserAuthorityConstants.ROLE_MANUFACTURER;
 
 @Configuration
 @ComponentScan({"com.project.aspect", "com.project.repository", "com.project.service", "com.project.controller"})

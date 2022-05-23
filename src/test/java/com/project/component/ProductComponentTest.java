@@ -22,7 +22,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.List;
 
 import static com.project.constant.ClientConstants.ORDER_WITH_ID_NOT_FOUND;
-import static com.project.mocks.ProductMock.*;
+import static com.project.mocks.ProductMock.getMockedProduct1;
+import static com.project.mocks.ProductMock.getMockedProduct2;
+import static com.project.mocks.ProductMock.getMockedProductList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;

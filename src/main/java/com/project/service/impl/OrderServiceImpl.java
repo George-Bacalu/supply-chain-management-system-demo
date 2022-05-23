@@ -12,7 +12,10 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.project.constant.ClientConstants.*;
+import static com.project.constant.ClientConstants.INVALID_ORDER_FORMAT;
+import static com.project.constant.ClientConstants.NO_ORDER_FOUND;
+import static com.project.constant.ClientConstants.ORDER_WITH_ID_NOT_FOUND;
+import static com.project.constant.ClientConstants.ORDER_WITH_INVALID_ID;
 import static com.project.utils.PriceUtils.getTotalPrice;
 
 @Service
